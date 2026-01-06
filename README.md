@@ -1,46 +1,81 @@
-<div align="left">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=28&pause=1000&color=6366F1&width=435&lines=Aisha+Brito;Creative+Developer;Fullstack+%26+Front-end;UFRJ+Engineering" alt="Typing SVG" />
-</div>
+# Aisha Brito ⚡
+### Front-end & Fullstack Developer
 
-### Sobre Mim ⚡
+Sou graduanda em **Engenharia Eletrônica e de Computação na UFRJ** e Desenvolvedora com experiência prática em consultoria e projetos autônomos.
 
-Sou graduanda em Engenharia na UFRJ e desenvolvedora focada no ecossistema **JavaScript**. 
-Gosto de pensar no código como uma forma de artesanato: exige técnica, paciência e criatividade para construir algo sólido e bonito.
+Minha trajetória profissional combina a base técnica da engenharia com a sensibilidade visual do design. Tive a oportunidade de atuar na **Fluxo Consultoria**, onde desenvolvi soluções para clientes reais em equipes ágeis, e atuo como freelancer entregando produtos digitais focados em conversão e performance.
 
-- 🔭 **Stack:** React.js, Node.js, Tailwind & TypeScript.
-- 🎯 **Foco:** Interfaces pixel-perfect e performance web.
-- 🎨 **Offline:** Sou uma maker! Adoro **pintura, bordado e costura**. Esses hobbies manuais treinam meu olhar para os detalhes que eu aplico no Front-end.
+Para mim, código é arquitetura e acabamento. Trago do meu background "maker" (pintura e bordado) a disciplina e a obsessão pelos detalhes que garantem interfaces pixel-perfect e códigos limpos.
+
+---
+
+### 💡 Diferenciais Técnicos
+
+Não apenas escrevo código; entrego soluções de software com foco em:
+
+* **Visão de Negócio:** Minha vivência em Empresa Júnior e Freelance me ensinou a alinhar tecnologia com as metas do cliente.
+* **Fullstack Awareness:** Embora meu foco seja Front-end, tenho competência sólida no Back-end (Node/SQL) para entender a aplicação como um todo e integrar APIs com eficiência.
+* **Performance & UX:** Crio aplicações que não apenas funcionam, mas são rápidas, acessíveis e proporcionam uma experiência fluida.
 
 ---
 
 ### 🛠️ Tech Stack
 
-<div align="left">
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
-  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind" />
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JS" />
-  <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node" />
-  <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="Postgres" />
-  <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white" alt="Figma" />
-  <img src="https://img.shields.io/badge/Git-E44C30?style=for-the-badge&logo=git&logoColor=white" alt="Git" />
-</div>
+Dominio o ecossistema JavaScript moderno para construção de aplicações escaláveis.
+
+#### 🎨 Front-end Engineering
+* **Core:** React.js, TypeScript, JavaScript (ES6+).
+* **Estilização:** Tailwind CSS, CSS-in-JS, Design Responsivo (Mobile-First).
+* **Conceitos:** Consumo de APIs REST, Gerenciamento de Estado, Otimização de Renderização.
+
+#### ⚙️ Back-end & Infra
+* **Server-side:** Node.js, Express.
+* **Dados:** PostgreSQL, Prisma ORM.
+* **Ferramentas:** Git/GitHub (Fluxo de trabalho profissional), Figma, VS Code.
 
 ---
 
-### 📊 GitHub Activity
+### 🚀 Portfólio Selecionado
 
-<div align="left">
-  <img height="160em" src="https://github-readme-stats.vercel.app/api?username=Aishabrito&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true&hide_border=true" />
-  <img height="160em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Aishabrito&layout=compact&langs_count=6&theme=tokyonight&hide_border=true" />
-</div>
+Projetos que demonstram minha capacidade técnica e de entrega:
+
+**📦 Estoque Fácil (Em Desenvolvimento)**
+Sistema Fullstack para gestão de inventário e controle financeiro que estou construindo atualmente.
+* **Tech:** React, Node.js, Prisma, PostgreSQL.
+* **Status:** Focada na integração entre o Back-end e o Dashboard interativo, implementando arquitetura escalável e boas práticas de banco de dados.
+
+**⚖️ Landing Page Jurídica (Freelance)**
+Projeto comercial entregue para digitalização de escritório de advocacia.
+* **Tech:** React, Otimização SEO.
+* **Destaque:** Produto entregue com foco em performance (Lighthouse score alto) e conversão de clientes via mobile.
+
+**🪐 Em Órbita (Habit Tracker)**
+Aplicação focada em produtividade e gamificação de rotinas.
+* **Tech:** JavaScript Avançado, CSS3.
+* **Destaque:** Lógica complexa de manipulação de estado no front-end e persistência de dados para acompanhamento de progresso do usuário.
+
+**🎵 Notas Ocultas (Streaming App)**
+Player web para descoberta e reprodução de música independente.
+* **Tech:** React, Media API.
+* **Destaque:** Interface rica (UI), controle de mídia assíncrono e organização dinâmica de playlists.
+
+---
+
+### 🎨 O Diferencial "Maker"
+
+Além da tecnologia, dedico-me a atividades manuais de alta precisão (**Bordado, Costura e Pintura**).
+Essa vivência fora das telas aprimora minha capacidade de:
+1.  Planejar a execução antes de começar (Arquitetura).
+2.  Ter paciência para refatorar e ajustar detalhes (Debugging/Polimento).
+3.  Entender composição visual e hierarquia (UI Design).
 
 ---
 
 <div align="left">
   <a href="https://www.linkedin.com/in/a%C3%ADsha-brito-9567bb226/" target="_blank">
-    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+    <img src="https://img.shields.io/badge/LinkedIn-Conectar_Profissionalmente-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
   </a>
   <a href="mailto:aisha.paola14@gmail.com">
-    <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail"/>
+    <img src="https://img.shields.io/badge/Email-Fale_Comigo-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail"/>
   </a>
 </div>
