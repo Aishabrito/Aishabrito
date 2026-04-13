@@ -63,12 +63,14 @@ Aplicação interativa focada em produtividade e gamificação de rotinas diári
 
   * **Tech:** JavaScript Avançado, CSS3.
   * **Destaque:** Lógica complexa de manipulação de estado no front-end e persistência de dados para o acompanhamento contínuo do progresso do usuário.
+  * **Acesso:** [Demo ao vivo](https://em-orbita-nine.vercel.app/)
 
-🎵 **Notas Ocultas (Streaming App)**
-Player web focado na descoberta e reprodução contínua de música independente.
+⚖️ **Mara Abreu – Advocacia e Compliance (Freelance)**
+Landing page institucional para escritório de advocacia especializado em blindagem patrimonial e defesa estratégica.
 
-  * **Tech:** React, Media API.
-  * **Destaque:** Interface rica (UI), controle de mídia assíncrono e organização dinâmica de *playlists*.
+  * **Tech:** React, Tailwind CSS, Vercel (CDN global), SEO.
+  * **Destaque:** Identidade visual Dark & Gold construída do zero, sem template. Mobile-first com CTAs estratégicos para conversão e carregamento instantâneo via CDN.
+  * **Acesso:** [Ver site](https://www.maraabreu.com/)
 
 -----
 
@@ -82,11 +84,11 @@ Além da tecnologia, dedico-me a atividades manuais de alta precisão (**Bordado
 
 -----
 
-\<div align="left"\>
-\<a href="[https://www.linkedin.com/in/a%C3%ADsha-brito-9567bb226/](https://www.linkedin.com/in/a%C3%ADsha-brito-9567bb226/)" target="\_blank"\>
-\<img src="[https://img.shields.io/badge/LinkedIn-Conectar\_Profissionalmente-0077B5?style=for-the-badge\&logo=linkedin\&logoColor=white](https://img.shields.io/badge/LinkedIn-Conectar_Profissionalmente-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)" alt="LinkedIn"/\>
-\</a\>
-\<a href="mailto:aisha.paola14@gmail.com"\>
-\<img src="[https://img.shields.io/badge/Email-Fale\_Comigo-D14836?style=for-the-badge\&logo=gmail\&logoColor=white](https://img.shields.io/badge/Email-Fale_Comigo-D14836?style=for-the-badge&logo=gmail&logoColor=white)" alt="Gmail"/\>
-\</a\>
-\</div\>
+<div align="left">
+<a href="https://www.linkedin.com/in/a%C3%ADsha-brito-9567bb226/" target="_blank">
+<img src="https://img.shields.io/badge/LinkedIn-Conectar_Profissionalmente-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+</a>
+<a href="mailto:aisha.paola14@gmail.com">
+<img src="https://img.shields.io/badge/Email-Fale_Comigo-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail"/>
+</a>
+</div>
