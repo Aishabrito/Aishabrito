@@ -45,25 +45,19 @@ Domínio do ecossistema JavaScript moderno para a construção de aplicações e
 
 Projetos reais que demonstram minha capacidade técnica e de entrega:
 
-📦 **Estoque Fácil (Sistema ERP/PDV)**
+⭐ **Estoque Fácil (Sistema ERP/PDV)**
 Sistema Full-stack para gestão de inventário com inteligência financeira e controle de acesso (RBAC).
 
   * **Tech:** React, Node.js, Prisma, PostgreSQL, JWT, Tailwind CSS.
   * **Destaque:** Demonstração ao vivo rodando na nuvem com credenciais de teste para visualização prática da arquitetura e das regras de negócio.
-  * **Acesso:** [Demo ao vivo](https://estoque-facil-completo.vercel.app) | Login: `demo@estoquefacil.com` / `demo123`
+  * **Acesso:** [Demo ao vivo](https://estoque-facil-completo.vercel.app) | Login: `demo@estoquefacil.com` / `demo123` | [Repositório](https://github.com/Aishabrito/estoque-facil-completo)
 
-🚀 **Notifica.ai (SaaS de Monitoramento)**
+⭐ **Notifica.ai (SaaS de Monitoramento)**
 Robô de *web scraping* que monitora atualizações em sites (como editais e resultados) e notifica usuários automaticamente via e-mail.
 
   * **Tech:** Node.js, Express, Cheerio, Axios, Nodemailer, MongoDB, React, Tailwind.
   * **Destaque:** Implementação de crawler com rotinas automatizadas, evasão de bloqueios (Jitter/Headers reais), sistema de autenticação JWT protegido para painel de administração e arquitetura de envio de e-mails em HTML.
-
-🪐 **Em Órbita (Habit Tracker)**
-Aplicação interativa focada em produtividade e gamificação de rotinas diárias.
-
-  * **Tech:** JavaScript Avançado, CSS3.
-  * **Destaque:** Lógica complexa de manipulação de estado no front-end e persistência de dados para o acompanhamento contínuo do progresso do usuário.
-  * **Acesso:** [Demo ao vivo](https://em-orbita-nine.vercel.app/)
+  * **Acesso:** [Repositório](https://github.com/Aishabrito/notifica-ai)
 
 ⚖️ **Mara Abreu – Advocacia e Compliance (Freelance)**
 Landing page institucional para escritório de advocacia especializado em blindagem patrimonial e defesa estratégica.
