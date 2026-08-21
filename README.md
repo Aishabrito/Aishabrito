@@ -4,8 +4,7 @@
 
 Graduanda em **Ciência da Computação (CEFET/RJ)**, com trajetória acadêmica anterior em **Engenharia Eletrônica e de Computação (UFRJ)**. Atuo como desenvolvedora de software com experiência prática em consultoria, projetos autônomos e pesquisa aplicada.
 
-Minha trajetória combina o rigor analítico da computação e a base técnica da engenharia com a sensibilidade visual do design. Atuei na **Fluxo Consultoria** desenvolvendo soluções em equipes ágeis, sou pesquisadora/desenvolvedora pelo programa **Jovens Cientistas Cariocas** e trabalho como freelancer entregando produtos digitais focados em alta performance e conversão.
-
+Minha trajetória combina o rigor analítico da computação e a base técnica da engenharia com a sensibilidade visual do design. Atuei na **Fluxo Consultoria** desenvolvendo soluções em equipes ágeis, sou pesquisadora/desenvolvedora pelo programa **Jovens Cientistas Cariocas**
 Para mim, código é arquitetura e acabamento. Trago do meu background "maker" a disciplina e a atenção aos detalhes para entregar interfaces *pixel-perfect*, acessíveis e com código limpo.
 
 ---
