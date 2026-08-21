@@ -56,6 +56,7 @@ Sistema Full-stack para gestão de inventário com inteligência financeira e co
 Robô de *web scraping* e automação que monitora atualizações em editais e sites, notificando usuários via e-mail.
 * **Tech:** Node.js, Express, Cheerio, Axios, Nodemailer, MongoDB, React, Tailwind CSS.
 * **Destaque:** Automação de rotinas com evasão de bloqueios (Jitter/Headers), autenticação JWT e disparador de alertas em templates HTML.
+* **Acesso:** https://www.notifica.dev.br/
 
 🪐 **Em Órbita (Habit Tracker)**  
 Aplicação interativa focada em produtividade e gamificação de rotinas diárias.
