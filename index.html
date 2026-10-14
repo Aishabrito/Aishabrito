@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Aísha Brito, desenvolvedora front-end e full-stack no Rio de Janeiro. Projetos, trajetória, pinturas, bordados e cartões-postais.">
+<meta property="og:title" content="Aísha Brito">
+<meta property="og:description" content="Eu programo, pinto, costuro, bordo e crocheto.">
+<meta property="og:image" content="https://aishabrito.github.io/Aishabrito/img/futuro.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2357613D'/%3E%3Ctext x='16' y='23' font-size='19' text-anchor='middle' fill='%23ECE7DB' font-family='Arial Black,sans-serif'%3EA%3C/text%3E%3C/svg%3E">
+<title>Aísha Brito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Karla:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Caveat:wght@500;600&display=swap">
+<style>
+/* Layout: as telas da Aísha viram a página — tecido cru, ondas em verde-sálvia, letra preta pintada à mão, contornos grossos e linha bordada. */
+:root {
+  --canvas: #ECE7DB;
+  --canvas-2: #F5F1E8;
+  --swirl-a: #DCE3CB;
+  --swirl-b: #BBC6A1;
+  --sage: #A3AF86;
+  --moss: #57613D;
+  --on-moss: #ECE7DB;
+  --ink: #171914;
+  --muted: #4F5546;
+  --line: #171914;
+
+  --f-paint: "Lilita One", "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+  --f-body: "Karla", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --f-hand: "Caveat", "Comic Sans MS", cursive;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --canvas: #121410; --canvas-2: #1A1D17; --swirl-a: #191D15; --swirl-b: #262D1F;
+    --sage: #7D8A60; --moss: #3E4730; --on-moss: #E8E4D7;
+    --ink: #EAE6DA; --muted: #B2B5A4; --line: #D9D5C8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --canvas: #121410; --canvas-2: #1A1D17; --swirl-a: #191D15; --swirl-b: #262D1F;
+  --sage: #7D8A60; --moss: #3E4730; --on-moss: #E8E4D7;
+  --ink: #EAE6DA; --muted: #B2B5A4; --line: #D9D5C8;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--canvas); color: var(--ink); font-family: var(--f-body); font-size: 17.5px; line-height: 1.6; margin: 0; }
+a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: var(--sage); }
+a:hover { text-decoration-color: var(--ink); }
+:focus-visible { outline: 3px solid var(--sage); outline-offset: 3px; }
+img { display: block; max-width: 100%; height: auto; }
+
+.wrap { max-width: 1120px; margin-inline: auto; padding-inline: 20px; }
+.paint { font-family: var(--f-paint); font-weight: 400; text-transform: uppercase; letter-spacing: .01em; line-height: .98; filter: url(#brush); }
+.label { font-family: var(--f-mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.hand { font-family: var(--f-hand); font-size: 25px; line-height: 1.1; color: var(--muted); }
+
+/* ondas pintadas */
+.swirl { position: relative; isolation: isolate; }
+.swirl > canvas.waves { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; display: block; }
+
+/* topo */
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 24px; padding-block: 18px; }
+.brand { font-family: var(--f-paint); font-size: 24px; text-decoration: none; text-transform: uppercase; filter: url(#brush); }
+.nav { display: flex; flex-wrap: wrap; gap: 4px 6px; }
+.nav a { font-family: var(--f-mono); font-size: 13px; text-decoration: none; padding: 5px 11px; border: 2px solid var(--line); border-radius: 999px; background: var(--canvas-2); }
+.nav a:hover { background: var(--ink); color: var(--canvas); }
+
+/* abertura */
+.hero { padding-block: 26px 70px; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .85fr); gap: 44px; align-items: center; }
+.visor { min-width: 0; background: var(--canvas-2); border: 3px solid var(--line); border-radius: 70px 110px 80px 120px / 90px 70px 120px 80px; padding: clamp(30px, 5vw, 56px) clamp(24px, 5vw, 56px); display: grid; gap: 18px; }
+.visor h1 { font-size: clamp(40px, 6.2vw, 80px); margin: 0; text-wrap: balance; }
+.visor p { margin: 0; max-width: 31em; font-size: 18.5px; }
+
+.taped { position: relative; min-width: 0; justify-self: center; width: min(400px, 100%); transform: rotate(2.2deg); }
+.taped img { width: 100%; border: 1px solid rgba(0,0,0,.25); box-shadow: 8px 10px 0 -2px rgba(23,25,20,.18), 0 20px 34px -18px rgba(0,0,0,.5); }
+.taped::before, .taped::after { content: ""; position: absolute; width: 96px; height: 28px; background: rgba(214, 221, 194, .82); border: 1px solid rgba(87, 97, 61, .25); z-index: 1; }
+.taped::before { top: -12px; left: 18px; transform: rotate(-8deg); }
+.taped::after { top: -8px; right: 10px; transform: rotate(7deg); }
+.taped figcaption { margin-top: 18px; display: grid; gap: 2px; }
+.taped figcaption .hand { color: var(--ink); }
+
+/* seções */
+section { padding-block: 64px; }
+.head { display: grid; gap: 10px; margin-bottom: 34px; max-width: 44em; }
+h2 { font-size: clamp(38px, 5.6vw, 64px); margin: 0; text-wrap: balance; }
+h3 { font-family: var(--f-paint); font-weight: 400; text-transform: uppercase; font-size: 28px; line-height: 1.02; margin: 0; letter-spacing: .01em; }
+.head p { margin: 0; color: var(--muted); }
+
+/* linha bordada (divisória) */
+.stitch-rule { display: block; width: 100%; height: 22px; color: var(--moss); }
+
+/* projetos */
+.works { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; }
+.work { min-width: 0; background: var(--canvas-2); border: 2.5px solid var(--line); border-radius: 18px 26px 16px 24px / 24px 16px 26px 18px; padding: 26px 26px 22px; display: grid; gap: 12px; align-content: start; }
+.work:nth-child(odd) { transform: rotate(-.4deg); }
+.work:nth-child(even) { transform: rotate(.5deg); }
+.work p { margin: 0; }
+.work .more { color: var(--muted); font-size: 16px; }
+.work.big { grid-column: 1 / -1; background: var(--moss); color: var(--on-moss); border-color: var(--moss); grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); column-gap: 44px; padding: 34px; transform: none; }
+.work.big .label, .work.big .more { color: var(--on-moss); opacity: .85; }
+.work.big h3 { font-size: clamp(34px, 4.4vw, 50px); }
+.work.big .col { display: grid; gap: 12px; align-content: start; min-width: 0; }
+.work.big .tags span { border-color: var(--on-moss); color: var(--on-moss); background: transparent; }
+.work.big a { text-decoration-color: var(--on-moss); }
+.cases { display: grid; gap: 30px; }
+.case { background: var(--canvas-2); border: 2.5px solid var(--line); border-radius: 20px 28px 18px 26px / 26px 18px 28px 20px; padding: 34px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 22px 44px; }
+.case .col { display: grid; gap: 14px; align-content: start; min-width: 0; }
+.case p { margin: 0; }
+.case h3 { font-size: clamp(34px, 4.4vw, 50px); }
+.case .tagline { font-size: 21px; line-height: 1.35; font-weight: 700; }
+.inside { background: var(--swirl-a); border-radius: 16px; padding: 22px 24px; display: grid; gap: 12px; }
+.inside .points { font-size: 15.5px; }
+.case-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; padding-top: 6px; }
+.case.green { background: var(--moss); color: var(--on-moss); border-color: var(--moss); }
+.case.green .label { color: var(--on-moss); opacity: .85; }
+.case.green .inside { background: rgba(255, 255, 255, .08); }
+.case.green .tags span { border-color: var(--on-moss); color: var(--on-moss); background: transparent; }
+.case.green a { text-decoration-color: var(--on-moss); }
+.case.green .aside-note { color: var(--on-moss); }
+.stamp { justify-self: start; font-family: var(--f-mono); font-size: 12.5px; letter-spacing: .04em; text-transform: uppercase; padding: 6px 14px; border: 2px dashed var(--on-moss); border-radius: 999px; transform: rotate(-2.5deg); }
+.points { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; font-size: 16px; }
+.points li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px; }
+.points li::before { content: ""; height: 3px; margin-top: .72em; border-radius: 2px; background: repeating-linear-gradient(90deg, currentColor 0 6px, transparent 6px 9px); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tags span { font-family: var(--f-mono); font-size: 12px; padding: 3px 10px; border: 1.5px solid var(--sage); border-radius: 999px; background: var(--swirl-a); }
+.links { display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--f-mono); font-size: 13.5px; padding-top: 2px; }
+.aside-note { font-family: var(--f-hand); font-size: 22px; line-height: 1.15; color: var(--moss); }
+
+.subhead { display: flex; align-items: center; gap: 16px; margin: 52px 0 20px; }
+.subhead h3 { font-size: 26px; white-space: nowrap; }
+.subhead svg { flex: 1; min-width: 40px; height: 14px; color: var(--sage); }
+
+.small-works { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.small { min-width: 0; display: grid; gap: 8px; align-content: start; padding-top: 14px; border-top: 2.5px solid var(--line); }
+.small h4 { font-family: var(--f-paint); font-weight: 400; text-transform: uppercase; font-size: 22px; margin: 0; }
+.small p { margin: 0; font-size: 16px; color: var(--muted); }
+
+.ai { margin-top: 46px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 20px; align-items: start; max-width: 48em; }
+.ai .hand { font-size: 32px; color: var(--moss); transform: rotate(-4deg); }
+.ai p { margin: 0; }
+
+/* trajetória */
+.path { list-style: none; margin: 0; padding: 0 0 0 54px; position: relative; display: grid; gap: 38px; max-width: 50em; }
+.path > svg { position: absolute; left: 6px; top: 6px; height: calc(100% - 12px); width: 28px; color: var(--moss); overflow: visible; }
+.path li { position: relative; display: grid; gap: 6px; }
+.path li::before { content: ""; position: absolute; left: -45px; top: 7px; width: 14px; height: 14px; border-radius: 50%; background: var(--canvas); border: 3px solid var(--line); }
+.path .where { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+.path p { margin: 0; }
+
+/* telas */
+.gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px; align-items: start; }
+.piece { min-width: 0; margin: 0; display: grid; gap: 12px; }
+.piece img, .piece canvas { width: 100%; border: 1px solid rgba(0,0,0,.2); box-shadow: 6px 8px 0 -2px rgba(23,25,20,.16); }
+.piece:nth-child(1) { transform: rotate(-1.2deg); }
+.piece:nth-child(2) { transform: rotate(.8deg); margin-top: 28px; }
+.piece:nth-child(3) { transform: rotate(-.6deg); }
+.piece:nth-child(4) { transform: rotate(1deg); margin-top: 20px; }
+.piece figcaption { display: grid; gap: 2px; }
+.piece figcaption b { font-family: var(--f-paint); font-weight: 400; text-transform: uppercase; font-size: 19px; letter-spacing: .01em; }
+.piece figcaption span { font-size: 15px; color: var(--muted); }
+
+.mural { margin: 64px 0 0; display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 20px 36px; align-items: end; }
+.mural img { width: 100%; border: 1px solid rgba(0,0,0,.2); box-shadow: 6px 8px 0 -2px rgba(23,25,20,.16); transform: rotate(-.5deg); }
+.mural figcaption { display: grid; gap: 6px; min-width: 0; }
+.mural figcaption b { font-family: var(--f-paint); font-weight: 400; text-transform: uppercase; font-size: 28px; }
+.mural figcaption span { color: var(--muted); }
+@media (max-width: 760px) { .mural { grid-template-columns: minmax(0, 1fr); } }
+.try { margin-top: 56px; display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 36px; align-items: center; }
+.try canvas { width: 100%; aspect-ratio: 3 / 4; display: block; border: 1px solid rgba(0,0,0,.2); box-shadow: 6px 8px 0 -2px rgba(23,25,20,.16); cursor: crosshair; touch-action: none; }
+.try-text { display: grid; gap: 14px; min-width: 0; }
+.try-text p { margin: 0; max-width: 34em; }
+.btns { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-mono); font-size: 14px; padding: 10px 17px; border: 2.5px solid var(--line); border-radius: 999px; background: var(--canvas-2); color: var(--ink); text-decoration: none; cursor: pointer; }
+.btn:hover { background: var(--ink); color: var(--canvas); }
+.btn.solid { background: var(--ink); color: var(--canvas); }
+.btn.solid:hover { background: var(--moss); border-color: var(--moss); color: var(--on-moss); }
+
+.slow { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 20px 40px; align-items: start; margin: 0 0 48px; padding: 28px 30px; background: var(--swirl-a); border: 2.5px solid var(--line); border-radius: 22px 30px 20px 28px / 28px 20px 30px 22px; }
+.slow .paint { font-size: clamp(36px, 5vw, 58px); margin: 0; }
+.slow > div { display: grid; gap: 12px; min-width: 0; }
+.slow p { margin: 0; font-size: 18px; }
+.origin { margin: 0 0 34px; }
+.from-to { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.from-to > div { flex: 1 1 200px; min-width: 0; display: grid; gap: 2px; background: var(--canvas-2); border: 2px solid var(--line); border-radius: 14px; padding: 12px 16px; }
+.from-to b { font-family: var(--f-paint); font-weight: 400; text-transform: uppercase; font-size: 19px; }
+.from-to span { font-size: 15px; color: var(--muted); }
+.from-to .arrow { font-size: 28px; color: var(--moss); }
+.why { margin-top: 56px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+.why div { min-width: 0; display: grid; gap: 6px; align-content: start; }
+.why h4 { font-family: var(--f-paint); font-weight: 400; text-transform: uppercase; font-size: 21px; margin: 0; }
+.why p { margin: 0; font-size: 16px; color: var(--muted); }
+
+/* busco */
+.seek { padding-block: 80px; }
+.seek-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+.seek-card { min-width: 0; background: var(--canvas-2); border: 3px solid var(--line); border-radius: 22px 30px 20px 28px / 28px 20px 30px 22px; padding: 30px; display: grid; gap: 14px; }
+.seek-card p { margin: 0; }
+.seek-card .lead { font-size: 21px; line-height: 1.4; font-weight: 500; }
+.kit { min-width: 0; background: var(--canvas-2); border: 3px solid var(--line); border-radius: 26px 18px 28px 20px / 20px 28px 18px 26px; padding: 26px 28px; display: grid; gap: 12px; }
+.kit dl { margin: 0; display: grid; gap: 12px; }
+.kit dt { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.kit dd { margin: 2px 0 0; font-size: 16px; }
+
+/* contato */
+.contact { padding-block: 72px 40px; display: grid; gap: 22px; }
+.contact h2 { font-size: clamp(44px, 8vw, 100px); }
+.row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.mail { font-family: var(--f-mono); font-size: 16px; padding: 10px 16px; border: 2.5px dashed var(--line); border-radius: 999px; user-select: all; overflow-wrap: anywhere; }
+.ok { font-family: var(--f-hand); font-size: 24px; color: var(--moss); }
+.postcard { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); background: var(--canvas-2); border: 2.5px solid var(--line); border-radius: 6px; box-shadow: 8px 10px 0 -2px rgba(23,25,20,.16); transform: rotate(-.6deg); max-width: 940px; }
+.pc-message { padding: 30px; display: grid; gap: 14px; align-content: start; border-right: 2px solid var(--sage); min-width: 0; }
+.pc-hand { font-family: var(--f-hand); font-size: 28px; line-height: 1.2; margin: 0; }
+.pc-note { margin: 10px 0 0; font-size: 15px; color: var(--muted); }
+.pc-address { padding: 26px 30px 30px; display: grid; gap: 20px; align-content: start; min-width: 0; }
+.pc-top { display: flex; justify-content: flex-end; align-items: flex-start; gap: 16px; }
+.postmark { font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; text-align: center; color: var(--moss); border: 2px solid var(--moss); border-radius: 50%; width: 92px; height: 92px; display: grid; place-items: center; transform: rotate(-12deg); margin-top: 18px; line-height: 1.3; }
+.stamp-img { margin: 0; width: 86px; padding: 6px; background: var(--canvas-2); border: 3px dotted var(--muted); transform: rotate(3deg); }
+.stamp-img img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.pc-lines { display: grid; gap: 4px; }
+.pc-line { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding-block: 10px; border-bottom: 1.5px solid var(--sage); font-family: var(--f-mono); font-size: 15px; min-width: 0; }
+.pc-line .mail { border: 0; padding: 0; }
+@media (max-width: 760px) {
+  .postcard { grid-template-columns: minmax(0, 1fr); transform: none; }
+  .pc-message { border-right: 0; border-bottom: 2px solid var(--sage); order: 2; }
+  .pc-address { order: 1; }
+}
+.foot { padding-block: 28px 44px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); }
+
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 46px; }
+  .taped { width: min(330px, 86%); }
+  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .why { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .seek-grid { grid-template-columns: minmax(0, 1fr); }
+  .slow { grid-template-columns: minmax(0, 1fr); }
+  .small-works { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 700px) {
+  .works { grid-template-columns: minmax(0, 1fr); }
+  .work, .work:nth-child(odd), .work:nth-child(even) { transform: none; }
+  .case { grid-template-columns: minmax(0, 1fr); padding: 26px 20px; }
+  .inside { padding: 18px; }
+  .work.big { grid-template-columns: minmax(0, 1fr); row-gap: 16px; padding: 26px 22px; }
+  .try { grid-template-columns: minmax(0, 1fr); }
+  .try canvas { max-width: 320px; }
+  .ai { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .visor { border-radius: 38px 46px 34px 44px; }
+}
+@media (max-width: 460px) {
+  body { font-size: 16.5px; }
+  .why { grid-template-columns: minmax(0, 1fr); }
+  .gallery { gap: 18px; }
+  .work, .seek-card, .kit { padding: 22px 18px; }
+}
+</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="brush" x="-2%" y="-5%" width="104%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <symbol id="seam" viewBox="0 0 400 14" preserveAspectRatio="none">
+    <path d="M2 7 C 60 2, 110 12, 170 7 S 290 2, 398 7" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="9 5"/>
+  </symbol>
+</svg>
+
+<div class="swirl" id="inicio">
+  <canvas class="waves" data-seed="1" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <header class="top">
+      <a class="brand" href="#inicio">Aísha Brito</a>
+      <nav class="nav" aria-label="Seções">
+        <a href="#projetos">projetos</a>
+        <a href="#trajetoria">trajetória</a>
+        <a href="#telas">telas</a>
+        <a href="#busco">o que busco</a>
+        <a href="#contato">contato</a>
+      </nav>
+    </header>
+
+    <div class="hero">
+      <div class="hero-grid">
+        <div class="visor">
+          <p class="label">Desenvolvedora front-end &amp; full-stack · Rio de Janeiro</p>
+          <h1 class="paint">Eu programo, pinto, costuro, bordo e crocheto.</h1>
+          <p>Sou a Aísha Paola, estudante de Ciência da Computação no CEFET/RJ. Muitos dos meus projetos começaram resolvendo um problema meu e depois viraram coisa para outras pessoas usarem. Longe do computador, pinto, costuro, bordo e faço crochê.</p>
+          <div class="btns">
+            <a class="btn solid" href="#projetos">Ver projetos</a>
+            <a class="btn" href="#telas">Ver minhas telas</a>
+          </div>
+        </div>
+        <figure class="taped">
+          <img src="img/astronauta.jpg" alt="Pintura em acrílica de um astronauta em contorno preto sobre fundo cru; no visor do capacete está escrito I NEED MORE SPACE em letras pintadas à mão." width="680" height="1010">
+          <figcaption>
+            <span class="hand">eu que pintei ↑</span>
+            <span class="label">“I need more space” · acrílica sobre tela</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <section id="projetos">
+    <div class="head">
+      <p class="label">9 projetos · 5 autorais, 2 para clientes, 2 testes</p>
+      <h2 class="paint">Coisas que eu construí</h2>
+      <p>Nos autorais, conto o problema, o que o projeto faz e as decisões que tomei por dentro.</p>
+    </div>
+
+    <div class="slow origin">
+      <p class="paint">Começa com uma dor minha.</p>
+      <div>
+        <p>Muitos dos meus projetos começaram como uma coisa que eu queria resolver para mim. Eu uso, ajusto até funcionar de verdade e depois abro para outras pessoas usarem.</p>
+        <div class="from-to">
+          <div><b>CEFET Watcher</b><span>um script que vigiava a página do SISU do CEFET só para mim</span></div>
+          <span class="arrow" aria-hidden="true">→</span>
+          <div><b>Notifica.ai</b><span>um site no ar que avisa vestibulandos e concurseiros</span></div>
+        </div>
+        <div class="from-to">
+          <div><b>Meu currículo</b><span>adaptar o currículo para cada vaga de estágio que eu tentava</span></div>
+          <span class="arrow" aria-hidden="true">→</span>
+          <div><b>Currículo Sob Medida</b><span>qualquer pessoa adapta o dela sem inventar nada</span></div>
+        </div>
+        <div class="from-to">
+          <div><b>Uma pergunta minha</b><span>por que as UPAs vivem lotadas, e o que causa isso?</span></div>
+          <span class="arrow" aria-hidden="true">→</span>
+          <div><b>Direciona.Ai</b><span>uma pesquisa que virou bot e app para mandar cada pessoa ao lugar certo</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cases">
+      <article class="case green">
+        <div class="col">
+          <p class="label">Saúde pública · app + bot de WhatsApp · pesquisa</p>
+          <h3>Direciona.Ai</h3>
+          <p class="tagline">Você conta o que está sentindo e descobre onde ser atendida no SUS.</p>
+          <p>Comecei querendo entender por que as UPAs vivem superlotadas e o que causa isso. Uma parte grande do problema é que muita gente vai à UPA quando a UBS resolveria, ou espera em casa quando devia ligar 192. O Direciona conversa por texto ou áudio, faz poucas perguntas e diz o lugar certo: UBS, UPA, CAPS, maternidade ou SAMU. Também mostra a unidade mais próxima e tira dúvidas sobre saúde e SUS. O mesmo bot atende no WhatsApp e no app.</p>
+          <p>Criei do zero como pesquisa no programa Jovens Cientistas Cariocas, da Prefeitura do Rio: a ideia, as bases de conhecimento de saúde e o código. Depois, foi uma das 200 ideias aprovadas na primeira fase do Programa Centelha, entre 1.053 inscritas.</p>
+          <span class="stamp">Centelha · 200 de 1.053 ideias</span>
+        </div>
+        <div class="col">
+          <div class="inside">
+            <p class="label">Por dentro</p>
+            <ul class="points">
+              <li>A IA nunca é a única barreira. Uma guarda de emergência roda antes dela e manda dor no peito, sinais de AVC ou pensamento suicida direto para o 192 ou o CVV 188. Uma validação roda depois, e se a IA cair, a triagem continua com regras fixas.</li>
+              <li>Pisos de segurança: com critério crítico, a resposta nunca fica abaixo de emergência. Em emergência, o bot usa um texto aprovado em vez do texto da IA, e frases com diagnóstico ou remédio são trocadas.</li>
+              <li>Base de conhecimento com mais de 140 tópicos de saúde e SUS, escrita por mim e buscada por similaridade (pgvector).</li>
+              <li>Áudio transcrito com Whisper e resposta em voz para quem mandou áudio.</li>
+              <li>Unidades de saúde do Rio e de Niterói tiradas do CNES, com OpenStreetMap de reserva. Sem internet, o app ainda reconhece emergência.</li>
+              <li>O telefone fica guardado só como hash, e o comando “apagar” remove os dados da pessoa (LGPD).</li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-foot">
+          <div class="tags"><span>React Native</span><span>Expo</span><span>Node</span><span>TypeScript</span><span>Groq</span><span>Whisper</span><span>Supabase + pgvector</span><span>Baileys</span><span>Vitest</span></div>
+          <div class="links">
+            <a href="https://github.com/Aishabrito/direciona-sus" target="_blank" rel="noopener">código do app ↗</a>
+            <a href="https://github.com/Aishabrito/back.direciona" target="_blank" rel="noopener">código do bot ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="col">
+          <p class="label">Vestibular e concurso · no ar</p>
+          <h3>Notifica.ai</h3>
+          <p class="tagline">Você vai saber antes de todo mundo.</p>
+          <p>Começou com a minha própria aflição de atualizar a página do SISU a cada cinco minutos. O mesmo incômodo já tinha virado um script, o CEFET Watcher. Aqui ele virou produto para vestibulandos e concurseiros: o Notifica vigia o site do SISU, da banca e o Diário Oficial e, quando algo muda, avisa no celular em uma frase, com o prazo e o link oficial.</p>
+          <ul class="points">
+            <li>Modelos prontos para ENEM, SISU, ProUni, Fies, UERJ, Fuvest, Cebraspe, FGV, Cesgranrio e outros, ou qualquer link que você colar. Dá para testar sem cadastro.</li>
+            <li>Compara as versões da página e dos PDFs de edital palavra por palavra, e a IA resume o que mudou numa frase.</li>
+            <li>“Minha posição na lista”: procura seu nome na lista de espera e mostra sua colocação.</li>
+            <li>Radar do Diário Oficial: procura seu nome no DOU e em diários municipais. Se aparece numa nomeação, vira um prazo de posse com a lista de documentos.</li>
+            <li>Prazos com “Código Vermelho”: aviso 72 horas, 24 horas e 3 horas antes, até você marcar “já fiz”.</li>
+            <li>Aviso por e-mail, Telegram e notificação no celular (o site instala como app), calendário de ENEM, SISU e concursos e resumo semanal.</li>
+          </ul>
+        </div>
+        <div class="col">
+          <div class="inside">
+            <p class="label">Por dentro</p>
+            <ul class="points">
+              <li>Cada alerta é reservado de forma atômica no MongoDB, então duas cópias do servidor rodando o mesmo agendamento nunca checam o mesmo alerta.</li>
+              <li>Cada página é baixada uma vez por rodada, mesmo que muita gente vigie o mesmo link. Os sites são intercalados, com pausa entre visitas ao mesmo site para não sobrecarregar a banca.</li>
+              <li>A posição na lista só vira número quando o padrão é seguro (“15º”, “classificação: 15”). Se não for, o site mostra o trecho em que o nome aparece.</li>
+              <li>Proteção contra SSRF: o servidor só acessa endereços públicos, inclusive depois de um redirecionamento.</li>
+              <li>Teto diário de chamadas de IA para controlar custo, e a IA fica isolada num arquivo só, então trocar de fornecedor é reescrever uma função.</li>
+              <li>Planos grátis e Pro com Pix e cartão pelo Mercado Pago, indique-e-ganhe e um painel de saúde que me abre uma tarefa quando o site de uma banca muda de endereço.</li>
+              <li>Mais de 20 arquivos de teste, dos pagamentos ao leitor de diário oficial.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-foot">
+          <div class="tags"><span>Node</span><span>Express</span><span>MongoDB</span><span>Cheerio</span><span>pdf-parse</span><span>Gemini</span><span>Web Push</span><span>Telegram</span><span>Mercado Pago</span><span>React</span><span>TypeScript</span></div>
+          <div class="links"><a href="https://notifica.dev.br" target="_blank" rel="noopener">notifica.dev.br ↗</a><a href="https://github.com/Aishabrito/notifica-ai" target="_blank" rel="noopener">código ↗</a></div>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="col">
+          <p class="label">Carreira · IA</p>
+          <h3>Currículo Sob Medida</h3>
+          <p class="tagline">Adapta o currículo para cada vaga sem inventar nada.</p>
+          <p>A maioria dos otimizadores de currículo devolve um texto novo, cheio de palavra-chave e com cara de robô. Aqui você cola a vaga, anexa o currículo e decide frase por frase o que muda, vendo o antes e o depois lado a lado.</p>
+          <ul class="points">
+            <li>Mapa de evidências: cada mudança precisa citar um trecho do seu currículo original como prova. Se o trecho não existe, a mudança aparece em vermelho.</li>
+            <li>Raio-X do ATS com os termos da vaga que você já tinha, os que entraram e os que faltam.</li>
+            <li>Requisitos eliminatórios (período, idioma, cidade, presencial) e a checagem do que faz um currículo de estágio ser descartado no Brasil em seis segundos.</li>
+            <li>O que falta vira um plano gratuito (“adicione testes com Vitest no projeto X, duas noites”), sem enfiar palavra-chave no currículo.</li>
+            <li>Carta de apresentação, mensagem para o LinkedIn, versão em inglês e treino de entrevista com nota.</li>
+          </ul>
+        </div>
+        <div class="col">
+          <div class="inside">
+            <p class="label">Por dentro</p>
+            <ul class="points">
+              <li>A resposta da IA é tratada como dado não confiável: validada campo a campo, com o texto do usuário isolado e a instrução de ignorar comandos escondidos nele.</li>
+              <li>A conta do ATS e a nota de “soa humano” são feitas no navegador, palavra por palavra, sem IA.</li>
+              <li>Mantém a sua formatação: no Word, edita o próprio arquivo; no PDF, lê o estilo do original e gera o novo igual.</li>
+              <li>O arquivo é lido no navegador e só o texto vai para o servidor. Nada fica salvo.</li>
+              <li>Gemini gratuito com Groq de reserva, chave escondida numa função serverless e limite de uso por pessoa.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-foot">
+          <div class="tags"><span>React</span><span>Vite</span><span>TypeScript</span><span>Vercel serverless</span><span>Gemini + Groq</span><span>pdf.js</span><span>jsPDF</span></div>
+          <div class="links"><a href="https://github.com/Aishabrito/curriculo-sob-medida" target="_blank" rel="noopener">código ↗</a></div>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="col">
+          <p class="label">Pequenos negócios · no ar</p>
+          <h3>Estoque Fácil</h3>
+          <p class="tagline">Estoque e caixa para loja pequena, com a conta do lucro junto.</p>
+          <p>Além de contar produto, ele mostra a margem de cada item, quanto dinheiro está parado na prateleira, quanto o estoque pode render e o que precisa repor. O caixa registra Pix, cartão ou dinheiro e já dá baixa no estoque.</p>
+          <p>Fiz do banco de dados ao deploy. O link de demonstração tem um acesso de administrador para testar tudo.</p>
+        </div>
+        <div class="col">
+          <div class="inside">
+            <p class="label">Por dentro</p>
+            <ul class="points">
+              <li>A baixa no estoque acontece numa transação no banco, então uma venda nunca deixa o estoque pela metade.</li>
+              <li>Dois perfis (administrador e operador) com JWT e bcrypt, e cada movimentação guarda quem fez.</li>
+              <li>Entrada validada com Zod antes de chegar no banco.</li>
+              <li>Painel e histórico se atualizam na hora depois de cada venda, sem recarregar a página.</li>
+              <li>CI no GitHub Actions, API no Render e site na Vercel.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-foot">
+          <div class="tags"><span>React 19</span><span>Node</span><span>Express</span><span>Prisma</span><span>PostgreSQL</span><span>Zod</span><span>Recharts</span></div>
+          <div class="links"><a href="https://estoque-facil-completo.vercel.app" target="_blank" rel="noopener">demo ↗</a><a href="https://github.com/Aishabrito/estoque-facil-completo" target="_blank" rel="noopener">código ↗</a></div>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="col">
+          <p class="label">Hábitos · em andamento</p>
+          <h3>Em Órbita</h3>
+          <p class="tagline">Cada hábito é um planeta. Se você para de cuidar, ele morre.</p>
+          <p>Um rastreador de hábitos em forma de sistema planetário, com você como a estrela do meio. Queria testar se uma metáfora visual faz a pessoa querer voltar no dia seguinte.</p>
+          <p class="aside-note">mesmo espaço do meu quadro do astronauta, só que em código.</p>
+        </div>
+        <div class="col">
+          <div class="inside">
+            <p class="label">Por dentro</p>
+            <ul class="points">
+              <li>A sequência de dias é calculada do histórico no Firestore, então não some quando você fecha o app.</li>
+              <li>As estrelas do fundo vêm de um gerador com semente, para não piscarem a cada atualização.</li>
+              <li>Órbitas só com CSS: o planeta gira em volta da estrela sem girar em torno de si.</li>
+              <li>Sons com a Web Audio API, e o modo de apagar muda as cores da tela para evitar exclusão sem querer.</li>
+              <li>Ainda falta deixar tudo bom no celular.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-foot">
+          <div class="tags"><span>React</span><span>Firebase Auth</span><span>Firestore</span><span>Tailwind</span><span>Web Audio</span></div>
+          <div class="links"><a href="https://em-orbita-nine.vercel.app/" target="_blank" rel="noopener">demo ↗</a><a href="https://github.com/Aishabrito/em-orbita" target="_blank" rel="noopener">código ↗</a></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="subhead"><h3>Para clientes</h3><svg aria-hidden="true"><use href="#seam"/></svg></div>
+    <div class="works">
+      <article class="work">
+        <p class="label">Advocacia · no ar</p>
+        <h3>Mara Abreu Advocacia</h3>
+        <p>Site do escritório, especializado em blindagem patrimonial. A cliente queria passar seriedade sem cara de modelo pronto: fiz uma identidade escura com dourado e tipografia serifada, pensada primeiro para o celular, com o WhatsApp sempre à mão.</p>
+        <div class="tags"><span>React</span><span>Tailwind</span><span>SEO</span><span>Vercel</span></div>
+        <div class="links"><a href="https://www.maraabreu.com/" target="_blank" rel="noopener">maraabreu.com ↗</a></div>
+      </article>
+      <article class="work">
+        <p class="label">Finanças pessoais</p>
+        <h3>Isabel Abreu</h3>
+        <p>Site da economista e planejadora financeira, com consultoria pessoal, empresas, palestras e um blog que ela mesma atualiza escrevendo um arquivo de texto no GitHub, sem depender de mim.</p>
+        <div class="tags"><span>Next.js</span><span>TypeScript</span><span>Markdown</span></div>
+        <div class="links"><a href="https://github.com/Aishabrito/site-isabel-abreu" target="_blank" rel="noopener">código ↗</a></div>
+      </article>
+    </div>
+
+    <div class="subhead"><h3>Testes pequenos</h3><svg aria-hidden="true"><use href="#seam"/></svg></div>
+    <div class="small-works">
+      <div class="small">
+        <p class="label">Script · GitHub Actions</p>
+        <h4>CEFET Watcher</h4>
+        <p>Vigiava a página do SISU do CEFET/RJ a cada 30 minutos e me mandava e-mail quando mudava. Sem servidor e sem custo.</p>
+        <div class="links"><a href="https://github.com/Aishabrito/cefet-watcher" target="_blank" rel="noopener">código ↗</a></div>
+      </div>
+      <div class="small">
+        <p class="label">Interface · áudio</p>
+        <h4>Notas Ocultas</h4>
+        <p>Player de música com cara de disco indie: barra de progresso clicável e modo aleatório que não repete a faixa atual.</p>
+        <div class="links"><a href="https://github.com/Aishabrito/player-musica" target="_blank" rel="noopener">código ↗</a></div>
+      </div>
+      <div class="small">
+        <p class="label">Este site</p>
+        <h4>Ateliê</h4>
+        <p>As ondas do fundo são desenhadas por código imitando o meu quadro “The future is yours to create”, e a tela de bordar lá embaixo troca a cor da linha quando cruza a divisa, igual ao meu bordado.</p>
+      </div>
+    </div>
+
+    <div class="ai">
+      <span class="hand" aria-hidden="true">sobre IA:</span>
+      <p>Uso IA no dia a dia, inclusive o Claude Code. Ela é como a máquina de costura: acelera a costura, mas o desenho, o corte e a revisão de cada ponto são meus. Sei explicar cada decisão de cada projeto aqui.</p>
+    </div>
+  </section>
+
+  <svg class="stitch-rule" aria-hidden="true"><use href="#seam"/></svg>
+
+  <section id="trajetoria">
+    <div class="head">
+      <p class="label">Trajetória</p>
+      <h2 class="paint">A linha até aqui</h2>
+      <p>Engenharia, empresa júnior, pesquisa, clientes e computação. Cada parte deixou um ponto diferente.</p>
+    </div>
+    <ol class="path">
+      <svg viewBox="0 0 28 400" preserveAspectRatio="none" aria-hidden="true"><path d="M14 0 C 2 60, 26 120, 14 180 S 2 300, 14 400" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="9 6" vector-effect="non-scaling-stroke"/></svg>
+      <li>
+        <div class="where"><h3>UFRJ</h3><span class="label">Engenharia Eletrônica e de Computação</span></div>
+        <p>Onde comecei. Cálculo, circuitos e os primeiros programas me deram a base técnica e a vontade de entender como as coisas funcionam por dentro.</p>
+      </li>
+      <li>
+        <div class="where"><h3>Fluxo Consultoria</h3><span class="label">Empresa júnior</span></div>
+        <p>Desenvolvi soluções para clientes reais em equipes ágeis. Aprendi a ouvir o que o cliente pede, transformar isso em requisito e entregar no prazo combinado.</p>
+      </li>
+      <li>
+        <div class="where"><h3>Jovens Cientistas Cariocas</h3><span class="label">Pesquisa · Prefeitura do Rio</span></div>
+        <p>Programa da Prefeitura do Rio que dá bolsa para universitários fazerem pesquisa aplicada à cidade. Submeti uma pesquisa minha e fiz tudo do zero: a ideia, as bases de conhecimento na área da saúde e o código. Foi daí que nasceu o Direciona.Ai.</p>
+        <p>Quero continuar a pesquisa na faculdade e levar o Direciona para quem precisa dele.</p>
+      </li>
+      <li>
+        <div class="where"><h3>Programa Centelha</h3><span class="label">Fomento à inovação</span></div>
+        <p>Levei a mesma pesquisa para o Centelha, programa de fomento a ideias inovadoras. Das 1.053 ideias inscritas, o Direciona.Ai foi uma das 200 aprovadas na primeira fase.</p>
+      </li>
+      <li>
+        <div class="where"><h3>Freelas</h3><span class="label">Sites para clientes</span></div>
+        <p>Sites para a Mara Abreu Advocacia e para a economista Isabel Abreu, do primeiro rascunho até o ar.</p>
+      </li>
+      <li>
+        <div class="where"><h3>CEFET/RJ</h3><span class="label">Ciência da Computação</span></div>
+        <p>Escolhi a computação de vez. Hoje estudo e construo meus projetos ao mesmo tempo.</p>
+      </li>
+    </ol>
+  </section>
+
+  <svg class="stitch-rule" aria-hidden="true"><use href="#seam"/></svg>
+
+  <section id="telas">
+    <div class="head">
+      <p class="label">Fora da tela do computador</p>
+      <h2 class="paint">Minhas telas</h2>
+      <p>Pinto com acrílica, costuro, bordo à mão por cima da tela pintada e faço crochê. Também coleciono fotos e cartões-postais. Gosto de verde clarinho, de contorno preto grosso e de letra feita no pincel.</p>
+    </div>
+
+    <div class="slow">
+      <p class="paint">Eu sou acelerada.</p>
+      <div>
+        <p>Penso em dez coisas ao mesmo tempo e começo a próxima antes de terminar a primeira. Pintar, costurar, bordar e crochetar são os momentos em que eu desacelero.</p>
+        <p>Não dá para apressar um ponto de crochê nem pular uma camada de tinta. É ali que eu consigo prestar atenção de verdade, pensar com calma e olhar as coisas devagar.</p>
+      </div>
+    </div>
+
+    <div class="gallery">
+      <figure class="piece">
+        <img src="img/futuro.jpg" alt="Tela pintada com ondas em dois tons de verde-sálvia e a frase THE FUTURE IS YOUR TO CREATE em letras pretas pintadas à mão." width="680" height="1050" loading="lazy">
+        <figcaption><b>The future is yours to create</b><span>Acrílica sobre tela</span></figcaption>
+      </figure>
+      <figure class="piece">
+        <img src="img/folha-1.jpg" alt="Tela dividida na diagonal entre verde-musgo e cru, com um ramo de folhas bordado em linha contínua; a linha é clara sobre o verde e verde sobre o cru." width="680" height="900" loading="lazy">
+        <figcaption><b>Ramo</b><span>Bordado à mão sobre tela pintada</span></figcaption>
+      </figure>
+      <figure class="piece">
+        <img src="img/folha-2.jpg" alt="Tela com manchas orgânicas em verde-musgo e cru, com uma folha de costela-de-adão bordada em linha contínua." width="680" height="895" loading="lazy">
+        <figcaption><b>Costela-de-adão</b><span>Bordado à mão sobre tela pintada</span></figcaption>
+      </figure>
+      <figure class="piece">
+        <img src="img/astronauta.jpg" alt="Pintura de astronauta em contorno preto com I NEED MORE SPACE escrito no visor." width="680" height="1010" loading="lazy">
+        <figcaption><b>I need more space</b><span>Acrílica sobre tela</span></figcaption>
+      </figure>
+    </div>
+
+    <figure class="mural">
+      <img src="img/mural.jpg" alt="Mural de cortiça com cartões-postais antigos presos com tachinhas: Piccadilly Circus em Londres, a Ponte dos Suspiros em Veneza, a ponte de madeira de Lucerna, montanhas com neve, uma praia e cidades vistas do alto." width="1200" height="743" loading="lazy">
+      <figcaption><b>Meu mural</b><span>Também coleciono cartões-postais antigos. Este é um pedaço da coleção, preso na cortiça: Londres, Veneza, Lucerna e outros lugares.</span></figcaption>
+    </figure>
+
+    <div class="try">
+      <canvas id="embroider" aria-label="Tela para bordar: arraste o dedo ou o mouse para bordar uma linha. A cor da linha troca quando cruza a divisa entre o verde e o cru." role="img"></canvas>
+      <div class="try-text">
+        <p class="label">Sua vez</p>
+        <h3>Borda uma linha aqui</h3>
+        <p>Arraste o dedo ou o mouse na tela ao lado. Igual ao meu ramo, a linha fica clara em cima do verde e escura em cima do cru.</p>
+        <div class="btns">
+          <button type="button" class="btn" id="undo">Desfazer a última linha</button>
+          <button type="button" class="btn" id="clear">Começar de novo</button>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<div class="swirl" id="busco">
+  <canvas class="waves" data-seed="2" aria-hidden="true"></canvas>
+  <div class="wrap seek">
+    <div class="head">
+      <p class="label">Próximo passo</p>
+      <h2 class="paint">O que eu busco</h2>
+    </div>
+    <div class="seek-grid">
+      <div class="seek-card">
+        <p class="lead">Um estágio em desenvolvimento front-end ou full-stack, num time que leva a sério quem usa o produto.</p>
+        <p>Quero aprender com gente experiente, receber revisão de código de verdade e entregar coisas que chegam na mão das pessoas. Os temas que mais me puxam são saúde pública, educação e ferramentas para pequenos negócios.</p>
+        <p>Trago a experiência com cliente da empresa júnior, a paciência da pesquisa e o cuidado com acabamento que aprendi bordando.</p>
+      </div>
+      <aside class="kit" aria-label="Ferramentas">
+        <p class="label">Caixa de ferramentas</p>
+        <dl>
+          <div><dt>Linguagens</dt><dd>TypeScript, JavaScript</dd></div>
+          <div><dt>Interface</dt><dd>React, React Native com Expo, Next.js, Tailwind, Figma</dd></div>
+          <div><dt>Servidor e dados</dt><dd>Node, Express, PostgreSQL com Prisma, MongoDB, Firebase</dd></div>
+          <div><dt>Entrega</dt><dd>Git, GitHub Actions, Vercel, Render, Vitest</dd></div>
+          <div><dt>IA</dt><dd>APIs de LLM (Gemini, Groq), triagem com regras de segurança</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="contact" id="contato">
+    <p class="label">Contato</p>
+    <h2 class="paint">Vamos conversar?</h2>
+    <div class="postcard">
+      <div class="pc-message">
+        <p class="pc-hand">Oi! Se você tem uma vaga, um projeto ou só quer trocar uma ideia, me escreve.</p>
+        <p class="pc-hand">Um abraço,<br>Aísha</p>
+        <p class="pc-note">Eu coleciono cartões-postais. Este aqui é digital.</p>
+      </div>
+      <div class="pc-address">
+        <div class="pc-top">
+          <span class="postmark" aria-hidden="true">Rio de Janeiro<br>· 2026 ·</span>
+          <figure class="stamp-img"><img src="img/folha-1.jpg" alt="Selo com a foto do bordado de ramo" width="680" height="900"></figure>
+        </div>
+        <div class="pc-lines">
+          <div class="pc-line"><span class="mail" id="mail">aisha.paola14@gmail.com</span><button type="button" class="btn solid" id="copy">Copiar e-mail</button><span class="ok" id="ok" aria-live="polite"></span></div>
+          <div class="pc-line"><a href="https://www.linkedin.com/in/a%C3%ADsha-brito-9567bb226/" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+          <div class="pc-line"><a href="https://github.com/Aishabrito" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="foot">
+    <span>Aísha Brito · Rio de Janeiro</span>
+    <span>“the future is yours to create”, de um quadro meu</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  const css = (n) => getComputedStyle(document.documentElement).getPropertyValue('--' + n).trim();
+  const hex = (h) => { h = h.replace('#', ''); return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16)); };
+
+  // ondas em dois tons, como no quadro "The future is yours to create"
+  function paintWaves(cv) {
+    const seed = Number(cv.dataset.seed) || 1;
+    const rect = cv.getBoundingClientRect();
+    const S = 1;
+    const w = Math.max(1, Math.ceil(rect.width / S)), h = Math.max(1, Math.ceil(rect.height / S));
+    cv.width = w; cv.height = h;
+    const ctx = cv.getContext('2d');
+    const img = ctx.createImageData(w, h);
+    const A = hex(css('swirl-a')), B = hex(css('swirl-b'));
+    const k = seed * 1.7;
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        const X = x * S, Y = y * S;
+        const f = Math.sin(X * 0.0062 + 2.1 * Math.sin(Y * 0.0048 + k))
+                + Math.sin(Y * 0.0071 + 1.8 * Math.sin(X * 0.0055 + k * 2))
+                + 0.6 * Math.sin((X - Y) * 0.0045 + k);
+        const v = (f + 3) * 1.35, band = Math.floor(v), fr = v - band;
+        const c = band % 2 ? B : A, o = band % 2 ? A : B;
+        const edge = Math.min(fr, 1 - fr), m = edge < 0.025 ? 0.5 - edge / 0.05 : 0;
+        const i = (y * w + x) * 4;
+        img.data[i] = c[0] + (o[0] - c[0]) * m; img.data[i + 1] = c[1] + (o[1] - c[1]) * m; img.data[i + 2] = c[2] + (o[2] - c[2]) * m; img.data[i + 3] = 255;
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+  const waves = [...document.querySelectorAll('canvas.waves')];
+  const repaint = () => waves.forEach(paintWaves);
+  waves.forEach((cv) => new ResizeObserver(() => paintWaves(cv)).observe(cv));
+
+  // tela de bordar
+  const cv = document.getElementById('embroider');
+  const ctx = cv.getContext('2d');
+  let lines = [], current = null;
+
+  // ramo inicial em linha contínua (coordenadas em 0..1)
+  function seedBranch() {
+    const pts = [];
+    const stem = (t) => [0.30 + 0.38 * t + 0.03 * Math.sin(t * 5), 0.86 - 0.70 * t];
+    pts.push(stem(0));
+    for (let i = 1; i <= 6; i++) {
+      const t = i / 6.4;
+      const [sx, sy] = stem(t);
+      const side = i % 2 ? -1 : 1;
+      const len = 0.17 - t * 0.06;
+      const tip = [sx + side * len, sy - 0.07];
+      const steps = 10;
+      for (let j = 0; j <= steps; j++) { const u = j / steps; pts.push([sx + (tip[0] - sx) * u + side * 0.045 * Math.sin(u * Math.PI), sy + (tip[1] - sy) * u - 0.025 * Math.sin(u * Math.PI)]); }
+      for (let j = 0; j <= steps; j++) { const u = j / steps; pts.push([tip[0] + (sx - tip[0]) * u - side * 0.03 * Math.sin(u * Math.PI), tip[1] + (sy - tip[1]) * u + 0.03 * Math.sin(u * Math.PI)]); }
+      for (let j = 1; j <= 4; j++) pts.push(stem(t + (j / 4) / 6.4));
+    }
+    const top = stem(1);
+    const steps = 14;
+    for (let j = 0; j <= steps; j++) { const a = (j / steps) * Math.PI * 2; pts.push([top[0] + 0.05 * Math.sin(a) , top[1] - 0.06 + 0.06 * Math.cos(a) * -1]); }
+    return pts;
+  }
+  const branch = seedBranch();
+
+  const isMoss = (x, y, W, H) => y / H > 1 - x / W * 1.15 + 0.12; // abaixo da diagonal = verde
+
+  function size() {
+    const r = cv.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    cv.width = Math.max(1, Math.round(r.width * dpr));
+    cv.height = Math.max(1, Math.round(r.height * dpr));
+    draw();
+  }
+
+  function stitchLine(pts, upto) {
+    const W = cv.width, H = cv.height, step = W * 0.026;
+    const P = pts.map(([x, y]) => [x * W, y * H]);
+    let carry = 0, count = 0, prev = P[0];
+    ctx.lineCap = 'round';
+    for (let i = 1; i < P.length; i++) {
+      const a = P[i - 1], b = P[i];
+      const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy);
+      let t = (step - carry);
+      while (t <= d) {
+        const q = [a[0] + dx * t / d, a[1] + dy * t / d];
+        if (upto !== undefined && count >= upto) return count;
+        const mx = (prev[0] + q[0]) / 2, my = (prev[1] + q[1]) / 2;
+        const moss = isMoss(mx, my, W, H);
+        ctx.strokeStyle = moss ? '#E6E0D2' : '#3F4A2C';
+        ctx.lineWidth = W * 0.012;
+        ctx.beginPath(); ctx.moveTo(prev[0] + (q[0] - prev[0]) * 0.08, prev[1] + (q[1] - prev[1]) * 0.08); ctx.lineTo(q[0], q[1]); ctx.stroke();
+        ctx.strokeStyle = moss ? 'rgba(255,255,255,.35)' : 'rgba(255,255,255,.18)';
+        ctx.lineWidth = W * 0.004;
+        ctx.beginPath(); ctx.moveTo(prev[0] + (q[0] - prev[0]) * 0.3, prev[1] + (q[1] - prev[1]) * 0.3 - W * 0.002); ctx.lineTo(q[0] - (q[0] - prev[0]) * 0.2, q[1] - (q[1] - prev[1]) * 0.2 - W * 0.002); ctx.stroke();
+        prev = q; count++; t += step;
+      }
+      carry = d - (t - step);
+    }
+    return count;
+  }
+
+  let shown = Infinity;
+  function draw() {
+    const W = cv.width, H = cv.height;
+    ctx.fillStyle = '#E8E2D5';
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#5A6540';
+    ctx.beginPath();
+    ctx.moveTo(0, H * 1.12);
+    ctx.lineTo(W, H * (1.12 - 1.15));
+    ctx.lineTo(W, H);
+    ctx.lineTo(0, H);
+    ctx.closePath();
+    ctx.fill();
+    // trama do tecido
+    ctx.fillStyle = 'rgba(0,0,0,0.035)';
+    for (let y = 0; y < H; y += 3) ctx.fillRect(0, y, W, 1);
+    stitchLine(branch, shown === Infinity ? undefined : shown);
+    lines.forEach((l) => l.length > 1 && stitchLine(l));
+    if (current && current.length > 1) stitchLine(current);
+  }
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function animateBranch() {
+    if (reduce) { shown = Infinity; draw(); return; }
+    shown = 0;
+    const tick = () => { shown += 2; draw(); if (shown < 400) requestAnimationFrame(tick); else { shown = Infinity; draw(); } };
+    requestAnimationFrame(tick);
+  }
+  let animated = false;
+  new IntersectionObserver((es, ob) => { if (es[0].isIntersecting && !animated) { animated = true; animateBranch(); ob.disconnect(); } }, { threshold: 0.4 }).observe(cv);
+
+  const pos = (e) => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height]; };
+  cv.addEventListener('pointerdown', (e) => { cv.setPointerCapture(e.pointerId); current = [pos(e)]; });
+  cv.addEventListener('pointermove', (e) => { if (!current) return; current.push(pos(e)); draw(); });
+  const end = () => { if (current && current.length > 1) lines.push(current); current = null; draw(); };
+  cv.addEventListener('pointerup', end);
+  cv.addEventListener('pointercancel', end);
+  document.getElementById('undo').addEventListener('click', () => { lines.pop(); draw(); });
+  document.getElementById('clear').addEventListener('click', () => { lines = []; draw(); });
+  new ResizeObserver(size).observe(cv);
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', repaint);
+  new MutationObserver(repaint).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  const ok = document.getElementById('ok');
+  document.getElementById('copy').addEventListener('click', () => {
+    const mail = document.getElementById('mail');
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents(mail); const s = getSelection(); s.removeAllRanges(); s.addRange(r); ok.textContent = 'selecionei, é só copiar'; };
+    try { navigator.clipboard.writeText(mail.textContent).then(() => { ok.textContent = 'copiado!'; }, fallback); } catch (err) { fallback(); }
+  });
+})();
+</script>
+
+</body>
+</html>
