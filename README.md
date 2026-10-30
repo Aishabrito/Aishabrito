@@ -18,8 +18,6 @@ Muitos dos meus projetos começaram resolvendo um problema meu e depois viraram 
 | **Estoque Fácil** (em andamento) | Estoque e caixa para loja pequena, com margem, dinheiro parado e baixa no estoque em transação. | [demo](https://estoque-facil-completo.vercel.app) · [código](https://github.com/Aishabrito/estoque-facil-completo) |
 | **Em Órbita** | Rastreador de hábitos em que cada hábito é um planeta. | [demo](https://em-orbita-nine.vercel.app/) · [código](https://github.com/Aishabrito/em-orbita) |
 
-Para clientes: [Mara Abreu Advocacia](https://www.maraabreu.com/) e o [site da economista Isabel Abreu](https://github.com/Aishabrito/site-isabel-abreu).
-
 ### Ferramentas
 
 - **Linguagens:** TypeScript, JavaScript
