@@ -15,7 +15,7 @@ Muitos dos meus projetos começaram resolvendo um problema meu e depois viraram 
 | **Direciona.Ai** | Você conta o que está sentindo e descobre onde ser atendida no SUS (UBS, UPA, CAPS, SAMU). App e bot de WhatsApp com guarda de emergência antes da IA. Pesquisa do Jovens Cientistas Cariocas e uma das 200 ideias aprovadas (de 1.053) na 1ª fase do Programa Centelha. | [app](https://github.com/Aishabrito/direciona-sus) · [bot](https://github.com/Aishabrito/back.direciona) |
 | **Notifica.ai** | Vigia o SISU, bancas de concurso e o Diário Oficial e avisa no celular quando algo muda, com o prazo e o link oficial. | [no ar](https://notifica.dev.br) · [código](https://github.com/Aishabrito/notifica-ai) |
 | **Currículo Sob Medida** | Adapta o currículo para cada vaga com IA sem inventar nada: cada mudança mostra a prova no currículo original e você aprova frase por frase. | [código](https://github.com/Aishabrito/curriculo-sob-medida) |
-| **Estoque Fácil** | Estoque e caixa para loja pequena, com margem, dinheiro parado e baixa no estoque em transação. | [demo](https://estoque-facil-completo.vercel.app) · [código](https://github.com/Aishabrito/estoque-facil-completo) |
+| **Estoque Fácil** (em andamento) | Estoque e caixa para loja pequena, com margem, dinheiro parado e baixa no estoque em transação. | [demo](https://estoque-facil-completo.vercel.app) · [código](https://github.com/Aishabrito/estoque-facil-completo) |
 | **Em Órbita** | Rastreador de hábitos em que cada hábito é um planeta. | [demo](https://em-orbita-nine.vercel.app/) · [código](https://github.com/Aishabrito/em-orbita) |
 
 Para clientes: [Mara Abreu Advocacia](https://www.maraabreu.com/) e o [site da economista Isabel Abreu](https://github.com/Aishabrito/site-isabel-abreu).
