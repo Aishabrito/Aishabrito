@@ -129,6 +129,13 @@ h3 { font-family: var(--f-paint); font-weight: 400; text-transform: uppercase; f
 .case.green a { text-decoration-color: var(--on-moss); }
 .case.green .aside-note { color: var(--on-moss); }
 .stamp { justify-self: start; font-family: var(--f-mono); font-size: 12.5px; letter-spacing: .04em; text-transform: uppercase; padding: 6px 14px; border: 2px dashed var(--on-moss); border-radius: 999px; transform: rotate(-2.5deg); }
+.video { position: relative; display: block; border-radius: 14px; overflow: hidden; border: 2px solid var(--on-moss); text-decoration: none; aspect-ratio: 16 / 9; background: #000; }
+.video img { width: 100%; height: 100%; object-fit: cover; opacity: .85; transition: opacity .2s; }
+.video:hover img { opacity: 1; }
+.video .play { position: absolute; top: 50%; left: 50%; width: 64px; height: 64px; margin: -40px 0 0 -32px; border-radius: 50%; background: var(--on-moss); }
+.video .play::after { content: ""; position: absolute; left: 25px; top: 19px; border-style: solid; border-width: 13px 0 13px 21px; border-color: transparent transparent transparent var(--moss); }
+.video-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 14px; font-family: var(--f-mono); font-size: 13px; color: #fff; background: linear-gradient(transparent, rgba(0,0,0,.75)); }
+.video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .points { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; font-size: 16px; }
 .points li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px; }
 .points li::before { content: ""; height: 3px; margin-top: .72em; border-radius: 2px; background: repeating-linear-gradient(90deg, currentColor 0 6px, transparent 6px 9px); }
@@ -355,6 +362,11 @@ h3 { font-family: var(--f-paint); font-weight: 400; text-transform: uppercase; f
           <p>Comecei querendo entender por que as UPAs vivem superlotadas e o que causa isso. Uma parte grande do problema é que muita gente vai à UPA quando a UBS resolveria, ou espera em casa quando devia ligar 192. O Direciona conversa por texto ou áudio, faz poucas perguntas e diz o lugar certo: UBS, UPA, CAPS, maternidade ou SAMU. Também mostra a unidade mais próxima e tira dúvidas sobre saúde e SUS. O mesmo bot atende no WhatsApp e no app.</p>
           <p>Criei do zero como pesquisa no programa Jovens Cientistas Cariocas, da Prefeitura do Rio: a ideia, as bases de conhecimento de saúde e o código. Depois, foi uma das 200 ideias aprovadas na primeira fase do Programa Centelha, entre 1.053 inscritas.</p>
           <span class="stamp">Centelha · 200 de 1.053 ideias</span>
+          <a class="video" href="https://youtu.be/KVXIu1j08AU" target="_blank" rel="noopener" data-yt="KVXIu1j08AU">
+            <img src="https://i.ytimg.com/vi/KVXIu1j08AU/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">
+            <span class="play" aria-hidden="true"></span>
+            <span class="video-cap">Vídeo que enviei ao Centelha ▶</span>
+          </a>
         </div>
         <div class="col">
           <div class="inside">
@@ -820,6 +832,21 @@ h3 { font-family: var(--f-paint); font-weight: 400; text-transform: uppercase; f
 
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', repaint);
   new MutationObserver(repaint).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+
+  // vídeo do Centelha: o YouTube só carrega quando a pessoa clica
+  document.querySelectorAll('.video[data-yt]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + a.dataset.yt + '?autoplay=1&rel=0';
+      f.title = 'Vídeo do Direciona.Ai enviado ao Programa Centelha';
+      f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      f.allowFullscreen = true;
+      a.replaceChildren(f);
+      a.removeAttribute('href');
+    });
+  });
 
   const ok = document.getElementById('ok');
   document.getElementById('copy').addEventListener('click', () => {
