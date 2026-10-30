@@ -1,89 +1,47 @@
-# Aísha Brito ⚡
+# Oi, eu sou a Aísha 🌿
 
-### Desenvolvedora de Software | Front-end & Full-stack Jr.
+Desenvolvedora front-end e full-stack no Rio de Janeiro, estudante de **Ciência da Computação no CEFET/RJ** (antes, Engenharia Eletrônica e de Computação na UFRJ).
 
-Graduanda em **Ciência da Computação (CEFET/RJ)**, com trajetória acadêmica anterior em **Engenharia Eletrônica e de Computação (UFRJ)**. Atuo como desenvolvedora de software com experiência prática em consultoria, projetos autônomos e pesquisa aplicada.
+Muitos dos meus projetos começaram resolvendo um problema meu e depois viraram coisa para outras pessoas usarem. Longe do computador, eu pinto, costuro, bordo e faço crochê.
 
-Minha trajetória combina o rigor analítico da computação e a base técnica da engenharia com a sensibilidade visual do design. Atuei na **Fluxo Consultoria** desenvolvendo soluções em equipes ágeis, sou pesquisadora/desenvolvedora pelo programa **Jovens Cientistas Cariocas**
-Para mim, código é arquitetura e acabamento. Trago do meu background "maker" a disciplina e a atenção aos detalhes para entregar interfaces *pixel-perfect*, acessíveis e com código limpo.
-
----
-
-### 💡 Diferenciais Técnicos
-
-Não apenas escrevo código; construo soluções completas com foco em:
-
-* **Inovação & Impacto Social:** Desenvolvimento de soluções voltadas a problemas reais, como a idealização e pesquisa do **Direciona SUS** (via programa Jovens Cientistas Cariocas) e concepção de sistemas para mobilidade e comunidade acadêmica.
-* **Fullstack Awareness:** Foco refinado em Front-end moderno aliado a uma base sólida de Back-end (Node.js/SQL/NoSQL) para integração eficiente de APIs e arquitetura ponta a ponta.
-* **Alinhamento de Negócio:** Vivência em Empresa Júnior, pesquisa pública e contato direto com clientes, traduzindo requisitos de negócio e impacto social em software escalável.
-* **Performance & UX:** Interfaces fluidas, com design responsivo (Mobile-First), foco rigoroso em usabilidade, acessibilidade e otimização de renderização.
+👉 **Portfólio completo:** [aishabrito.github.io/Aishabrito](https://aishabrito.github.io/Aishabrito/)
 
 ---
 
-### 🛠️ Tech Stack
+### Projetos
 
-Domínio do ecossistema JavaScript moderno para a construção de aplicações escaláveis.
+| Projeto | O que faz | Links |
+|---|---|---|
+| **Direciona.Ai** | Você conta o que está sentindo e descobre onde ser atendida no SUS (UBS, UPA, CAPS, SAMU). App e bot de WhatsApp com guarda de emergência antes da IA. Pesquisa do Jovens Cientistas Cariocas e uma das 200 ideias aprovadas (de 1.053) na 1ª fase do Programa Centelha. | [app](https://github.com/Aishabrito/direciona-sus) · [bot](https://github.com/Aishabrito/back.direciona) |
+| **Notifica.ai** | Vigia o SISU, bancas de concurso e o Diário Oficial e avisa no celular quando algo muda, com o prazo e o link oficial. | [no ar](https://notifica.dev.br) · [código](https://github.com/Aishabrito/notifica-ai) |
+| **Currículo Sob Medida** | Adapta o currículo para cada vaga com IA sem inventar nada: cada mudança mostra a prova no currículo original e você aprova frase por frase. | [código](https://github.com/Aishabrito/curriculo-sob-medida) |
+| **Estoque Fácil** | Estoque e caixa para loja pequena, com margem, dinheiro parado e baixa no estoque em transação. | [demo](https://estoque-facil-completo.vercel.app) · [código](https://github.com/Aishabrito/estoque-facil-completo) |
+| **Em Órbita** | Rastreador de hábitos em que cada hábito é um planeta. | [demo](https://em-orbita-nine.vercel.app/) · [código](https://github.com/Aishabrito/em-orbita) |
 
-#### 🎨 Front-end Engineering
-* **Core:** React.js, TypeScript, JavaScript (ES6+).
-* **Estilização:** Tailwind CSS, CSS-in-JS, Design Responsivo (Mobile-First).
-* **Conceitos:** Consumo de APIs REST, Gerenciamento de Estado, Acessibilidade & Otimização.
+Para clientes: [Mara Abreu Advocacia](https://www.maraabreu.com/) e o [site da economista Isabel Abreu](https://github.com/Aishabrito/site-isabel-abreu).
 
-#### ⚙️ Back-end & Infraestrutura
-* **Server-side:** Node.js, Express.
-* **Banco de Dados:** PostgreSQL, MongoDB, Prisma ORM.
-* **Ferramentas & Práticas:** Git/GitHub, Figma, Docker, Testes básicos.
+### Ferramentas
 
----
+- **Linguagens:** TypeScript, JavaScript
+- **Interface:** React, React Native com Expo, Next.js, Tailwind, Figma
+- **Servidor e dados:** Node, Express, PostgreSQL com Prisma, MongoDB, Firebase, Supabase
+- **Entrega:** Git, GitHub Actions, Vercel, Render, Vitest
+- **IA:** APIs de LLM (Gemini, Groq), com validação da resposta e regras de segurança
 
-### 🚀 Portfólio & Projetos Selecionados
+### O que eu busco
 
-Projetos que demonstram minha capacidade técnica, arquitetura e entrega:
-
-🏛️ **Direciona SUS (Pesquisa & Impacto Público)**  
-Projeto desenvolvido no âmbito do programa **Jovens Cientistas Cariocas**, focado em mapear, orientar e facilitar o acesso dos cidadãos aos serviços da rede de saúde pública.
-* **Tech:** React, Node.js, APIs de Geolocalização/Dados Públicos, Tailwind CSS.
-* **Destaque:** Arquitetura orientada à acessibilidade, usabilidade em dispositivos de baixo desempenho e interface intuitiva para visualização de rotas e serviços.
-
-📦 **Estoque Fácil (Sistema ERP/PDV)**  
-Sistema Full-stack para gestão de inventário com inteligência financeira e controle de acesso baseado em cargos (RBAC).
-* **Tech:** React, Node.js, Prisma, PostgreSQL, JWT, Tailwind CSS.
-* **Destaque:** Demonstração ao vivo rodando na nuvem com credenciais de teste para visualização prática da arquitetura e regras de negócio.
-* **Acesso:** [Demo ao vivo](https://estoque-facil-completo.vercel.app) | Login: `demo@estoquefacil.com` / `demo123`
-
-🚀 **Notifica.ai (SaaS de Monitoramento)**  
-Robô de *web scraping* e automação que monitora atualizações em editais e sites, notificando usuários via e-mail.
-* **Tech:** Node.js, Express, Cheerio, Axios, Nodemailer, MongoDB, React, Tailwind CSS.
-* **Destaque:** Automação de rotinas com evasão de bloqueios (Jitter/Headers), autenticação JWT e disparador de alertas em templates HTML.
-* **Acesso:** https://www.notifica.dev.br/
-
-🪐 **Em Órbita (Habit Tracker)**  
-Aplicação interativa focada em produtividade e gamificação de rotinas diárias.
-* **Tech:** JavaScript Avançado, CSS3 / Tailwind.
-* **Destaque:** Lógica rica de manipulação de estado no front-end e persistência de dados.
-
-🎵 **Notas Ocultas (Streaming Web Player)**  
-Player web voltado à descoberta e reprodução contínua de música independente.
-* **Tech:** React, Media API.
-* **Destaque:** Interface rica, controle de mídia assíncrono e gerenciamento dinâmico de playlists.
-
----
-
-### 🎨 O Diferencial "Maker" (Hobbies & Precisão)
-
-Fora das telas, dedico-me a práticas manuais de precisão, como **bordado, costura e pintura acrílica**. Esses hobbies aprimoram diretamente meu trabalho no desenvolvimento de software:
-
-1. **Planejamento:** Pensar a estrutura visual e os fluxos antes de iniciar a implementação no código.
-2. **Paciência & Polimento:** Olhar atento e refinado para debugging detalhado e acabamento *pixel-perfect*.
-3. **Harmonia Visual:** Noção natural de composição, teoria das cores, espaçamento e hierarquia de interface (UI/UX).
+Um estágio em desenvolvimento front-end ou full-stack, num time que leva a sério quem usa o produto. Os temas que mais me puxam são saúde pública, educação e ferramentas para pequenos negócios.
 
 ---
 
 <div align="left">
+  <a href="https://aishabrito.github.io/Aishabrito/" target="_blank">
+    <img src="https://img.shields.io/badge/Portf%C3%B3lio-Ver_o_site-57613D?style=for-the-badge" alt="Portfólio"/>
+  </a>
   <a href="https://www.linkedin.com/in/a%C3%ADsha-brito-9567bb226/" target="_blank">
-    <img src="https://img.shields.io/badge/LinkedIn-Conectar_Profissionalmente-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+    <img src="https://img.shields.io/badge/LinkedIn-Conectar-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
   </a>
   <a href="mailto:aisha.paola14@gmail.com">
-    <img src="https://img.shields.io/badge/Email-Fale_Comigo-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail"/>
+    <img src="https://img.shields.io/badge/Email-Fale_comigo-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="E-mail"/>
   </a>
 </div>
