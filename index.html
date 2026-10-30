@@ -178,12 +178,6 @@ h3 { font-family: var(--f-paint); font-weight: 400; text-transform: uppercase; f
 .piece figcaption b { font-family: var(--f-paint); font-weight: 400; text-transform: uppercase; font-size: 19px; letter-spacing: .01em; }
 .piece figcaption span { font-size: 15px; color: var(--muted); }
 
-.mural { margin: 64px 0 0; display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 20px 36px; align-items: end; }
-.mural img { width: 100%; border: 1px solid rgba(0,0,0,.2); box-shadow: 6px 8px 0 -2px rgba(23,25,20,.16); transform: rotate(-.5deg); }
-.mural figcaption { display: grid; gap: 6px; min-width: 0; }
-.mural figcaption b { font-family: var(--f-paint); font-weight: 400; text-transform: uppercase; font-size: 28px; }
-.mural figcaption span { color: var(--muted); }
-@media (max-width: 760px) { .mural { grid-template-columns: minmax(0, 1fr); } }
 .try { margin-top: 56px; display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 36px; align-items: center; }
 .try canvas { width: 100%; aspect-ratio: 3 / 4; display: block; border: 1px solid rgba(0,0,0,.2); box-shadow: 6px 8px 0 -2px rgba(23,25,20,.16); cursor: crosshair; touch-action: none; }
 .try-text { display: grid; gap: 14px; min-width: 0; }
@@ -583,7 +577,7 @@ h3 { font-family: var(--f-paint); font-weight: 400; text-transform: uppercase; f
     <div class="head">
       <p class="label">Fora da tela do computador</p>
       <h2 class="paint">Minhas telas</h2>
-      <p>Pinto com acrílica, costuro, bordo à mão por cima da tela pintada e faço crochê. Também coleciono fotos e cartões-postais. Gosto de verde clarinho, de contorno preto grosso e de letra feita no pincel.</p>
+      <p>Pinto com acrílica, costuro, bordo à mão por cima da tela pintada e faço crochê. Gosto de verde clarinho, de contorno preto grosso e de letra feita no pincel.</p>
     </div>
 
     <div class="slow">
@@ -612,11 +606,6 @@ h3 { font-family: var(--f-paint); font-weight: 400; text-transform: uppercase; f
         <figcaption><b>I need more space</b><span>Acrílica sobre tela</span></figcaption>
       </figure>
     </div>
-
-    <figure class="mural">
-      <img src="img/mural.jpg" alt="Mural de cortiça com cartões-postais antigos presos com tachinhas: Piccadilly Circus em Londres, a Ponte dos Suspiros em Veneza, a ponte de madeira de Lucerna, montanhas com neve, uma praia e cidades vistas do alto." width="1200" height="743" loading="lazy">
-      <figcaption><b>Meu mural</b><span>Também coleciono cartões-postais antigos. Este é um pedaço da coleção, preso na cortiça: Londres, Veneza, Lucerna e outros lugares.</span></figcaption>
-    </figure>
 
     <div class="try">
       <canvas id="embroider" aria-label="Tela para bordar: arraste o dedo ou o mouse para bordar uma linha. A cor da linha troca quando cruza a divisa entre o verde e o cru." role="img"></canvas>
