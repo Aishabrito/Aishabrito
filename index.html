@@ -337,6 +337,47 @@ html.motion .postcard.in .postmark { animation: stamp .55s cubic-bezier(.3,1.5,.
   .band-track { animation: none !important; }
   .thread { display: none; }
 }
+
+/* status e idioma no topo */
+.brand-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; }
+.status { display: inline-flex; align-items: center; gap: 7px; font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--moss); border: 1.5px solid var(--line); }
+html.motion .status .dot { animation: pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: scale(.6); opacity: .5; } }
+.lang { font-family: var(--f-mono); font-size: 13px; padding: 5px 11px; border: 2px solid var(--line); border-radius: 999px; background: var(--ink); color: var(--canvas); cursor: pointer; }
+.lang:hover { background: var(--moss); border-color: var(--moss); color: var(--on-moss); }
+
+/* mapa do site em 3D: um sisteminha planetário pintado */
+.system-sec { padding-bottom: 20px; }
+.system { position: relative; background: var(--canvas-2); border: 3px solid var(--line); border-radius: 40px 60px 44px 64px / 56px 40px 64px 44px; overflow: hidden; touch-action: pan-y; }
+.system canvas { display: block; width: 100%; height: clamp(340px, 52vw, 520px); cursor: grab; }
+.system canvas.dragging { cursor: grabbing; }
+@media (max-width: 600px) {
+  .system canvas { height: 440px; }
+  .system.live .planets a { font-size: 11.5px; padding: 3px 8px; }
+}
+.system-hint { position: absolute; left: 22px; bottom: 16px; margin: 0; pointer-events: none; }
+.planets { list-style: none; margin: 0; padding: 18px; display: flex; flex-wrap: wrap; gap: 8px; }
+.planets a { font-family: var(--f-mono); font-size: 13px; text-decoration: none; padding: 5px 12px; border: 2px solid var(--line); border-radius: 999px; background: var(--canvas-2); white-space: nowrap; transition: background .2s, color .2s, scale .2s; }
+.planets a:hover, .planets a.hot { background: var(--ink); color: var(--canvas); }
+.system.live .planets { padding: 0; position: absolute; inset: 0; pointer-events: none; }
+.system.live .planets li { position: absolute; left: 0; top: 0; will-change: transform; }
+.system.live .planets a { display: block; pointer-events: auto; translate: -50% -100%; }
+
+/* astronauta e cartões inclinam em 3D seguindo o mouse */
+.taped { perspective: 900px; }
+.taped img { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
+.taped:hover img { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) rotate(-1.6deg) scale(1.03); }
+.taped.tilting img { transition: transform .12s ease-out; }
+.case.tilt, .seek-card.tilt, .kit.tilt, .slow.tilt { transform: perspective(1400px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .35s cubic-bezier(.2,.8,.2,1), translate .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s; }
+
+/* texto que se decodifica */
+.decoding { font-variant-ligatures: none; }
+
+/* cursor de agulha com linha (só com mouse) */
+@media (pointer: fine) {
+  html.needle, html.needle body { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M22 10 C 30 14, 30 24, 22 27 S 12 30, 14 22' fill='none' stroke='%2357613D' stroke-width='1.8' stroke-linecap='round' stroke-dasharray='3 2'/%3E%3Cpath d='M3 29 L 24 6' stroke='%23171914' stroke-width='3.2' stroke-linecap='round'/%3E%3Cpath d='M3 29 L 24 6' stroke='%23F5F1E8' stroke-width='1' stroke-linecap='round' stroke-dasharray='0 19 3 9'/%3E%3C/svg%3E") 3 29, auto; }
+}
 </style>
 <script>if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) document.documentElement.classList.add("motion");</script>
 </head>
@@ -359,13 +400,17 @@ html.motion .postcard.in .postmark { animation: stamp .55s cubic-bezier(.3,1.5,.
   <canvas class="waves" data-seed="1" aria-hidden="true"></canvas>
   <div class="wrap">
     <header class="top">
-      <a class="brand" href="#inicio">Aísha Brito</a>
+      <div class="brand-row">
+        <a class="brand" href="#inicio">Aísha Brito</a>
+        <span class="status"><i class="dot" aria-hidden="true"></i><span data-i18n="status">online · RJ</span> <time id="clock"></time></span>
+      </div>
       <nav class="nav" aria-label="Seções">
         <a href="#projetos">projetos</a>
         <a href="#trajetoria">trajetória</a>
         <a href="#telas">telas</a>
         <a href="#busco">o que busco</a>
         <a href="#contato">contato</a>
+        <button type="button" class="lang" id="lang" lang="en" aria-label="Read in English">EN</button>
       </nav>
     </header>
 
@@ -395,6 +440,25 @@ html.motion .postcard.in .postmark { animation: stamp .55s cubic-bezier(.3,1.5,.
 <div class="band" aria-hidden="true"><div class="band-track"><span>programo</span><span>pinto</span><span>costuro</span><span>bordo</span><span>crocheto</span><span>programo</span><span>pinto</span><span>costuro</span><span>bordo</span><span>crocheto</span><span>programo</span><span>pinto</span><span>costuro</span><span>bordo</span><span>crocheto</span><span>programo</span><span>pinto</span><span>costuro</span><span>bordo</span><span>crocheto</span></div></div>
 
 <main class="wrap">
+  <section class="system-sec" id="mapa" aria-labelledby="mapa-t">
+    <div class="head">
+      <p class="label">Mapa do site</p>
+      <h2 class="paint" id="mapa-t">Escolha um planeta</h2>
+      <p>Cada planeta leva a uma parte do site. Arraste para girar o sistema.</p>
+    </div>
+    <div class="system">
+      <canvas id="system" aria-hidden="true"></canvas>
+      <ul class="planets">
+        <li><a href="#projetos" data-planet="0">projetos</a></li>
+        <li><a href="#trajetoria" data-planet="1">trajetória</a></li>
+        <li><a href="#telas" data-planet="2">telas</a></li>
+        <li><a href="#busco" data-planet="3">o que busco</a></li>
+        <li><a href="#contato" data-planet="4">contato</a></li>
+      </ul>
+      <p class="label system-hint" aria-hidden="true">arraste ↔</p>
+    </div>
+  </section>
+
   <section id="projetos">
     <div class="head">
       <p class="label">5 projetos autorais e alguns testes pequenos</p>
@@ -599,7 +663,7 @@ html.motion .postcard.in .postmark { animation: stamp .55s cubic-bezier(.3,1.5,.
       <div class="small">
         <p class="label">Este site</p>
         <h4>Ateliê</h4>
-        <p>As ondas do fundo são desenhadas por código imitando o meu quadro “The future is yours to create”, e a tela de bordar lá embaixo troca a cor da linha quando cruza a divisa, igual ao meu bordado.</p>
+        <p>As ondas do fundo são desenhadas por código imitando o meu quadro “The future is yours to create”, o mapa de planetas é uma pequena cena 3D em canvas, e a tela de bordar lá embaixo troca a cor da linha quando cruza a divisa, igual ao meu bordado.</p>
       </div>
     </div>
     <p class="more clients">Também fiz sites para clientes: <a href="https://www.maraabreu.com/" target="_blank" rel="noopener">Mara Abreu Advocacia ↗</a> e o da economista Isabel Abreu.</p>
@@ -899,7 +963,7 @@ html.motion .postcard.in .postmark { animation: stamp .55s cubic-bezier(.3,1.5,.
       e.preventDefault();
       const f = document.createElement('iframe');
       f.src = 'https://www.youtube-nocookie.com/embed/' + a.dataset.yt + '?autoplay=1&rel=0';
-      f.title = 'Vídeo do Direciona.Ai enviado ao Programa Centelha';
+      f.title = T('Vídeo do Direciona.Ai enviado ao Programa Centelha');
       f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
       f.allowFullscreen = true;
       a.replaceChildren(f);
@@ -907,11 +971,12 @@ html.motion .postcard.in .postmark { animation: stamp .55s cubic-bezier(.3,1.5,.
     });
   });
 
+  const T = (pt) => (document.documentElement.lang === 'en' && window.EN && window.EN[pt]) || pt;
   const ok = document.getElementById('ok');
   document.getElementById('copy').addEventListener('click', () => {
     const mail = document.getElementById('mail');
-    const fallback = () => { const r = document.createRange(); r.selectNodeContents(mail); const s = getSelection(); s.removeAllRanges(); s.addRange(r); ok.textContent = 'selecionei, é só copiar'; };
-    try { navigator.clipboard.writeText(mail.textContent).then(() => { ok.textContent = 'copiado!'; }, fallback); } catch (err) { fallback(); }
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents(mail); const s = getSelection(); s.removeAllRanges(); s.addRange(r); ok.textContent = T('selecionei, é só copiar'); };
+    try { navigator.clipboard.writeText(mail.textContent).then(() => { ok.textContent = T('copiado!'); }, fallback); } catch (err) { fallback(); }
   });
 })();
 </script>
@@ -963,6 +1028,361 @@ html.motion .postcard.in .postmark { animation: stamp .55s cubic-bezier(.3,1.5,.
     links.forEach((a) => a.setAttribute('aria-current', a.getAttribute('href') === '#' + e.target.id ? 'true' : 'false'));
   }), { rootMargin: '-45% 0px -50% 0px' });
   links.forEach((a) => { const t = document.querySelector(a.getAttribute('href')); if (t) spy.observe(t); });
+})();
+</script>
+
+<script>
+/* toques futuristas, mantendo o ateliê: sistema planetário, inclinação 3D, texto que se decodifica, relógio e agulha */
+(function () {
+  const root = document.documentElement;
+  const motion = root.classList.contains('motion');
+  const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const css = (n) => getComputedStyle(root).getPropertyValue('--' + n).trim();
+  root.classList.add('needle');
+
+  // relógio do Rio
+  const clock = document.getElementById('clock');
+  const tick = () => { clock.textContent = new Date().toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit' }); };
+  tick(); setInterval(tick, 15000);
+
+  // ── sistema planetário ──────────────────────────────────────────
+  const box = document.querySelector('.system');
+  const cv = document.getElementById('system');
+  const ctx = cv.getContext && cv.getContext('2d');
+  if (box && ctx) {
+    box.classList.add('live');
+    const labels = [...box.querySelectorAll('.planets a')];
+    const lis = labels.map((a) => a.parentElement);
+    // órbita (unidades), tamanho, fase inicial
+    const P = [
+      { o: 1.0,  r: .22, a: .6,  kind: 'ring' },
+      { o: 1.48, r: .15, a: 2.4, kind: 'stitch' },
+      { o: 1.98, r: .19, a: 4.1, kind: 'waves' },
+      { o: 2.46, r: .14, a: 5.5, kind: 'craters' },
+      { o: 2.92, r: .11, a: 1.3, kind: 'moon' },
+    ];
+    let C = {};
+    const readColors = () => { C = { bg: css('canvas-2'), cream: css('canvas'), a: css('swirl-a'), b: css('swirl-b'), sage: css('sage'), moss: css('moss'), ink: css('ink'), muted: css('muted') }; };
+    readColors();
+    const look = [
+      [C.moss, C.sage], [C.sage, C.a], [C.b, C.cream], [C.ink, C.muted], [C.moss, C.b],
+    ];
+    const setLook = () => { look[0] = [C.moss, C.sage]; look[1] = [C.sage, C.a]; look[2] = [C.b, C.cream]; look[3] = [C.ink, C.muted]; look[4] = [C.moss, C.b]; };
+
+    // estrelinhas fixas (semente fixa para não mudar a cada quadro)
+    let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const sparks = Array.from({ length: 34 }, () => ({ x: rnd(), y: rnd(), s: rnd(), p: rnd() * 6.28, big: rnd() < .22 }));
+
+    let W = 0, H = 0, dpr = 1, yaw = -.35, pitch = .46, vel = 0, t = 0, hot = -1, last = 0, running = false, visible = false;
+    let shot = [];
+
+    function resize() {
+      const r = cv.getBoundingClientRect();
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      W = cv.width = Math.round(r.width * dpr); H = cv.height = Math.round(r.height * dpr);
+      if (!resize.done) { resize.done = true; if (r.width < 600) { pitch = .95; yaw = -.2; } }
+      draw();
+    }
+
+    function project(x, y, z, scale) {
+      const cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+      const x1 = x * cy - z * sy, z1 = x * sy + z * cy;
+      const y2 = y * cp - z1 * sp, z2 = y * sp + z1 * cp;
+      const f = 7 / (7 + z2);
+      return [W / 2 + x1 * f * scale, H * .52 + y2 * f * scale, z2, f];
+    }
+
+    function sparkle(x, y, s) {
+      ctx.beginPath();
+      ctx.moveTo(x, y - s); ctx.quadraticCurveTo(x, y, x + s, y); ctx.quadraticCurveTo(x, y, x, y + s); ctx.quadraticCurveTo(x, y, x - s, y); ctx.quadraticCurveTo(x, y, x, y - s);
+      ctx.fill();
+    }
+
+    function ball(x, y, R, sx, sy, cols) {
+      ctx.save();
+      ctx.beginPath(); ctx.arc(x, y, R, 0, Math.PI * 2); ctx.clip();
+      ctx.fillStyle = cols[0]; ctx.fillRect(x - R, y - R, R * 2, R * 2);
+      let dx = sx - x, dy = sy - y; const d = Math.hypot(dx, dy) || 1; dx /= d; dy /= d;
+      ctx.fillStyle = cols[1];
+      ctx.beginPath(); ctx.arc(x + dx * R * .5, y + dy * R * .5, R * 1.02, 0, Math.PI * 2); ctx.fill();
+    }
+
+    function outline(x, y, R, lw) {
+      ctx.restore();
+      ctx.lineWidth = lw; ctx.strokeStyle = C.ink;
+      ctx.beginPath(); ctx.arc(x, y, R, 0, Math.PI * 2); ctx.stroke();
+    }
+
+    function draw() {
+      if (!W) return;
+      const lw = 2.6 * dpr;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = C.bg; ctx.fillRect(0, 0, W, H);
+
+      ctx.fillStyle = C.ink;
+      sparks.forEach((s) => {
+        ctx.globalAlpha = motion ? .25 + .3 * (0.5 + 0.5 * Math.sin(t * 1.3 + s.p)) : .4;
+        if (s.big) sparkle(s.x * W, s.y * H, (4 + s.s * 5) * dpr);
+        else { ctx.beginPath(); ctx.arc(s.x * W, s.y * H, (0.9 + s.s * 1.1) * dpr, 0, 7); ctx.fill(); }
+      });
+      ctx.globalAlpha = 1;
+
+      // estrela cadente de vez em quando
+      shot = shot.filter((m) => m.life > 0);
+      shot.forEach((m) => {
+        m.x += m.vx; m.y += m.vy; m.life -= 1;
+        ctx.strokeStyle = C.moss; ctx.lineWidth = 2 * dpr; ctx.setLineDash([6 * dpr, 4 * dpr]); ctx.lineCap = 'round';
+        ctx.globalAlpha = Math.min(1, m.life / 20);
+        ctx.beginPath(); ctx.moveTo(m.x, m.y); ctx.lineTo(m.x - m.vx * 9, m.y - m.vy * 9); ctx.stroke();
+        ctx.globalAlpha = 1; ctx.setLineDash([]);
+      });
+
+      const maxO = 2.92;
+      const narrow = W / dpr < 600;
+      const scale = Math.min(W * (narrow ? .47 : .44) / maxO, H * .40 / (maxO * Math.sin(pitch) + .35));
+      const grow = narrow ? 1.35 : 1;
+      const sun = project(0, 0, 0, scale);
+
+      // órbitas: metade de trás e metade da frente
+      const orbitPts = P.map((p) => {
+        const pts = [];
+        for (let i = 0; i <= 96; i++) { const a = i / 96 * Math.PI * 2; pts.push(project(Math.cos(a) * p.o, 0, Math.sin(a) * p.o, scale)); }
+        return pts;
+      });
+      function orbits(front) {
+        ctx.lineCap = 'round';
+        orbitPts.forEach((pts, k) => {
+          ctx.strokeStyle = k === hot ? C.moss : C.ink;
+          ctx.globalAlpha = k === hot ? 1 : .5;
+          ctx.lineWidth = (k === hot ? 3 : 2) * dpr;
+          ctx.setLineDash([9 * dpr, 6 * dpr]);
+          ctx.beginPath();
+          let pen = false;
+          for (let i = 0; i < pts.length; i++) {
+            const q = pts[i], isFront = q[2] <= 0;
+            if (isFront === front) { pen ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1]); pen = true; } else pen = false;
+          }
+          ctx.stroke();
+        });
+        ctx.setLineDash([]); ctx.globalAlpha = 1;
+      }
+
+      const bodies = P.map((p, k) => {
+        const a = p.a + t * (0.32 / Math.pow(p.o, 1.5));
+        const q = project(Math.cos(a) * p.o, 0, Math.sin(a) * p.o, scale);
+        const R = p.r * scale * q[3] * grow * (k === hot ? 1.14 : 1);
+        return { k, p, x: q[0], y: q[1], z: q[2], R };
+      });
+
+      function planet(b) {
+        const { x, y, R, p, k } = b;
+        if (p.kind === 'ring') { ctx.lineWidth = lw; ctx.strokeStyle = C.ink; ctx.beginPath(); ctx.ellipse(x, y, R * 1.9, R * .55, -.32, Math.PI, Math.PI * 2); ctx.stroke(); }
+        let moonFront = null;
+        if (p.kind === 'moon') {
+          const ma = t * 1.4 + 1, mx = x + Math.cos(ma) * R * 2, my = y + Math.sin(ma) * R * .7;
+          moonFront = Math.sin(ma) > 0;
+          if (!moonFront) { ball(mx, my, R * .38, sun[0], sun[1], [C.sage, C.cream]); outline(mx, my, R * .38, lw * .8); }
+          b.moon = [mx, my];
+        }
+        ball(x, y, R, sun[0], sun[1], look[k]);
+        ctx.lineCap = 'round';
+        if (p.kind === 'stitch') {
+          ctx.strokeStyle = C.ink; ctx.lineWidth = 2 * dpr; ctx.setLineDash([5 * dpr, 4 * dpr]);
+          for (const o of [-.35, .3]) { ctx.beginPath(); ctx.moveTo(x - R, y + o * R); ctx.bezierCurveTo(x - R * .3, y + (o - .35) * R, x + R * .3, y + (o + .35) * R, x + R, y + o * R); ctx.stroke(); }
+          ctx.setLineDash([]);
+        } else if (p.kind === 'waves') {
+          ctx.strokeStyle = C.sage; ctx.lineWidth = R * .22;
+          for (const o of [-.45, .1, .62]) { ctx.beginPath(); for (let i = 0; i <= 20; i++) { const u = -1 + i / 10; const yy = y + o * R + Math.sin(u * 4 + o * 5) * R * .12; i ? ctx.lineTo(x + u * R, yy) : ctx.moveTo(x + u * R, yy); } ctx.stroke(); }
+        } else if (p.kind === 'craters') {
+          ctx.strokeStyle = C.cream; ctx.lineWidth = 1.6 * dpr; ctx.globalAlpha = .75;
+          for (const [cx, cy, cr] of [[-.35, -.25, .2], [.3, .25, .26], [.1, -.5, .12]]) { ctx.beginPath(); ctx.arc(x + cx * R, y + cy * R, cr * R, 0, 7); ctx.stroke(); }
+          ctx.globalAlpha = 1;
+        }
+        outline(x, y, R, lw);
+        if (p.kind === 'ring') {
+          ctx.lineWidth = lw; ctx.strokeStyle = C.ink; ctx.beginPath(); ctx.ellipse(x, y, R * 1.9, R * .55, -.32, 0, Math.PI); ctx.stroke();
+          ctx.lineWidth = 1.6 * dpr; ctx.strokeStyle = C.sage; ctx.beginPath(); ctx.ellipse(x, y, R * 1.6, R * .42, -.32, 0, Math.PI); ctx.stroke();
+        }
+        if (moonFront) { ball(b.moon[0], b.moon[1], R * .38, sun[0], sun[1], [C.sage, C.cream]); outline(b.moon[0], b.moon[1], R * .38, lw * .8); }
+        if (k === hot) { ctx.strokeStyle = C.moss; ctx.lineWidth = 2 * dpr; ctx.setLineDash([6 * dpr, 5 * dpr]); ctx.beginPath(); ctx.arc(x, y, R * (p.kind === 'ring' ? 2.15 : 1.5), 0, 7); ctx.stroke(); ctx.setLineDash([]); }
+      }
+
+      function drawSun() {
+        const R = .4 * scale * sun[3] * grow;
+        ctx.strokeStyle = C.moss; ctx.lineWidth = 3 * dpr; ctx.lineCap = 'round';
+        for (let i = 0; i < 14; i++) {
+          const a = i / 14 * Math.PI * 2 + t * .05, r1 = R * 1.22, r2 = R * (i % 2 ? 1.45 : 1.6);
+          ctx.beginPath(); ctx.moveTo(sun[0] + Math.cos(a) * r1, sun[1] + Math.sin(a) * r1); ctx.lineTo(sun[0] + Math.cos(a) * r2, sun[1] + Math.sin(a) * r2); ctx.stroke();
+        }
+        ctx.save(); ctx.beginPath(); ctx.arc(sun[0], sun[1], R, 0, 7); ctx.clip();
+        ctx.fillStyle = C.cream; ctx.fillRect(sun[0] - R, sun[1] - R, R * 2, R * 2);
+        ctx.strokeStyle = C.a; ctx.lineWidth = R * .2;
+        for (const o of [-.5, .05, .6]) { ctx.beginPath(); for (let i = 0; i <= 20; i++) { const u = -1 + i / 10; const yy = sun[1] + o * R + Math.sin(u * 3 + o * 4 + t * .4) * R * .14; i ? ctx.lineTo(sun[0] + u * R, yy) : ctx.moveTo(sun[0] + u * R, yy); } ctx.stroke(); }
+        outline(sun[0], sun[1], R, lw * 1.15);
+        ctx.fillStyle = C.ink; ctx.font = Math.round(R * 1.15) + 'px "Lilita One", sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('A', sun[0], sun[1] + R * .06);
+      }
+
+      orbits(false);
+      bodies.filter((b) => b.z > 0).sort((a, b) => b.z - a.z).forEach(planet);
+      drawSun();
+      orbits(true);
+      bodies.filter((b) => b.z <= 0).sort((a, b) => b.z - a.z).forEach(planet);
+
+      draw.bodies = bodies;
+      bodies.forEach((b) => {
+        const lift = b.p.kind === 'ring' ? b.R * 1.05 : b.R;
+        lis[b.k].style.transform = 'translate(' + (b.x / dpr).toFixed(1) + 'px,' + ((b.y - lift) / dpr - 12).toFixed(1) + 'px)';
+        lis[b.k].style.zIndex = String(100 - Math.round(b.z * 10));
+      });
+    }
+
+    function frame(now) {
+      if (!running) return;
+      const dt = Math.min(.05, (now - (last || now)) / 1000); last = now;
+      t += dt * (hot >= 0 ? .25 : 1);
+      if (!dragging) { yaw += vel; vel *= .94; }
+      if (Math.random() < .004 && shot.length < 1) shot.push({ x: Math.random() * W * .6, y: Math.random() * H * .3, vx: W * .006, vy: H * .004, life: 60 });
+      draw();
+      requestAnimationFrame(frame);
+    }
+    function start() { if (running || !motion) return; running = true; last = 0; requestAnimationFrame(frame); }
+    function stop() { running = false; }
+
+    function setHot(k) {
+      if (k === hot) return;
+      hot = k;
+      labels.forEach((a, i) => a.classList.toggle('hot', i === k));
+      cv.style.cursor = k >= 0 ? 'pointer' : '';
+      if (!running) draw();
+    }
+
+    // arrastar para girar
+    let dragging = false, moved = 0, px = 0, py = 0;
+    cv.addEventListener('pointerdown', (e) => { dragging = true; moved = 0; px = e.clientX; py = e.clientY; vel = 0; cv.setPointerCapture(e.pointerId); cv.classList.add('dragging'); });
+    cv.addEventListener('pointermove', (e) => {
+      if (dragging) {
+        const dx = e.clientX - px, dy = e.clientY - py; px = e.clientX; py = e.clientY;
+        moved += Math.abs(dx) + Math.abs(dy);
+        yaw -= dx * .008; vel = -dx * .008 * .6;
+        pitch = Math.min(1.05, Math.max(.16, pitch + dy * .004));
+        if (!running) draw();
+        return;
+      }
+      const r = cv.getBoundingClientRect(), mx = (e.clientX - r.left) * dpr, my = (e.clientY - r.top) * dpr;
+      let k = -1, best = Infinity;
+      (draw.bodies || []).forEach((b) => { const d = Math.hypot(b.x - mx, b.y - my); if (d < Math.max(b.R * 1.4, 22 * dpr) && d < best) { best = d; k = b.k; } });
+      setHot(k);
+    });
+    const up = () => {
+      if (!dragging) return;
+      dragging = false; cv.classList.remove('dragging');
+      if (moved < 6 && hot >= 0) labels[hot].click();
+    };
+    cv.addEventListener('pointerup', up);
+    cv.addEventListener('pointercancel', () => { dragging = false; cv.classList.remove('dragging'); });
+    cv.addEventListener('pointerleave', () => { if (!dragging) setHot(-1); });
+    labels.forEach((a, i) => { a.addEventListener('pointerenter', () => setHot(i)); a.addEventListener('pointerleave', () => setHot(-1)); a.addEventListener('focus', () => setHot(i)); a.addEventListener('blur', () => setHot(-1)); });
+
+    new ResizeObserver(resize).observe(cv);
+    new IntersectionObserver((es) => { visible = es[0].isIntersecting; visible ? start() : stop(); }).observe(cv);
+    if (document.fonts) document.fonts.ready.then(() => { if (!running) draw(); });
+    const recolor = () => { readColors(); setLook(); if (!running) draw(); };
+    matchMedia('(prefers-color-scheme: dark)').addEventListener('change', recolor);
+    new MutationObserver(recolor).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  }
+
+  // ── inclinação 3D seguindo o mouse ─────────────────────────────
+  if (motion && fine) {
+    const tilt = (el, max, cls) => {
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        el.style.setProperty('--ry', (x * max).toFixed(2) + 'deg');
+        el.style.setProperty('--rx', (-y * max).toFixed(2) + 'deg');
+        if (cls) el.classList.add(cls);
+      });
+      el.addEventListener('pointerleave', () => { el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg'); if (cls) el.classList.remove(cls); });
+    };
+    const taped = document.querySelector('.taped');
+    if (taped) tilt(taped, 18, 'tilting');
+    document.querySelectorAll('.case, .seek-card, .kit, .slow').forEach((el) => { el.classList.add('tilt'); tilt(el, 2.2); });
+  }
+
+  // ── rótulos que se decodificam ao aparecer ─────────────────────
+  if (motion) {
+    const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#*+/<>';
+    const decode = (el) => {
+      const final = el.textContent;
+      if (!final.trim() || el.dataset.decoded === final) return;
+      el.dataset.decoded = final;
+      el.setAttribute('aria-label', final);
+      el.classList.add('decoding');
+      const start = performance.now(), dur = 380 + final.length * 16;
+      const step = (now) => {
+        const p = Math.min(1, (now - start) / dur);
+        const fixed = Math.floor(p * final.length);
+        let out = '';
+        for (let i = 0; i < final.length; i++) {
+          const c = final[i];
+          out += i < fixed || c === ' ' || c === '·' ? c : glyphs[(Math.random() * glyphs.length) | 0];
+        }
+        el.textContent = out;
+        if (p < 1) requestAnimationFrame(step); else { el.textContent = final; el.classList.remove('decoding'); el.removeAttribute('aria-label'); }
+      };
+      requestAnimationFrame(step);
+    };
+    window.__decode = decode;
+    const heroLabel = document.querySelector('.visor .label');
+    if (heroLabel) setTimeout(() => decode(heroLabel), 900);
+    const ob = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { decode(e.target); ob.unobserve(e.target); } }), { threshold: .6 });
+    document.querySelectorAll('.head > .label, .inside > .label, .contact > .label').forEach((el) => ob.observe(el));
+  }
+})();
+</script>
+
+<script src="en.js"></script>
+<script>
+/* PT / EN: troca os textos pelo dicionário de en.js e lembra a escolha */
+(function () {
+  const root = document.documentElement, btn = document.getElementById('lang');
+  const EN = window.EN || {}, PT = {};
+  Object.keys(EN).forEach((k) => { PT[EN[k]] = k; });
+  const norm = (s) => s.replace(/\s+/g, ' ').trim();
+  function swap(dict) {
+    const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, { acceptNode: (n) => n.parentElement.closest('script, style, svg, time, .visor h1') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
+    for (let n = w.nextNode(); n; n = w.nextNode()) {
+      const k = norm(n.data);
+      if (k && dict[k]) n.data = n.data.match(/^\s*/)[0] + dict[k] + n.data.match(/\s*$/)[0];
+    }
+    document.querySelectorAll('[alt], [aria-label], [title]').forEach((el) => {
+      if (el === btn || el.matches('.visor h1')) return;
+      ['alt', 'aria-label', 'title'].forEach((a) => { const v = el.getAttribute(a); if (v && dict[norm(v)]) el.setAttribute(a, dict[norm(v)]); });
+    });
+    // título principal: pode estar quebrado em palavras animadas
+    const h1 = document.querySelector('.visor h1');
+    const full = norm(h1.getAttribute('aria-label') || h1.textContent), next = dict[full];
+    if (next) {
+      if (h1.querySelector('.w')) {
+        h1.setAttribute('aria-label', next);
+        h1.innerHTML = next.split(' ').map((word, i) => '<span class="w" aria-hidden="true" style="--i:' + i + '">' + word + '</span>').join(' ');
+      } else h1.textContent = next;
+    }
+  }
+  function setLang(lang, save) {
+    const en = lang === 'en';
+    if ((root.lang === 'en') === en) return;
+    swap(en ? EN : PT);
+    root.lang = en ? 'en' : 'pt-BR';
+    btn.textContent = en ? 'PT' : 'EN';
+    btn.setAttribute('lang', en ? 'pt-BR' : 'en');
+    btn.setAttribute('aria-label', en ? 'Ler em português' : 'Read in English');
+    if (save) { try { localStorage.setItem('lang', lang); } catch (e) {} }
+  }
+  btn.addEventListener('click', () => setLang(root.lang === 'en' ? 'pt' : 'en', true));
+  let start = new URLSearchParams(location.search).get('lang');
+  if (!start) { try { start = localStorage.getItem('lang'); } catch (e) {} }
+  if (start === 'en') setLang('en', false);
 })();
 </script>
 
