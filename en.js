@@ -19,7 +19,7 @@ window.EN = {
   "crocheto": "crochet",
   "Mapa do site": "Site map",
   "Escolha um planeta": "Pick a planet",
-  "Cada planeta leva a uma parte do site. Arraste para girar o sistema.": "Each planet takes you to a part of the site. Drag to spin the system.",
+  "O astronauta do meu quadro saiu da tela e ficou preso ao sistema por uma linha de bordado. Os planetas são feitos das minhas telas, e cada um leva a uma parte do site. Arraste para girar.": "The astronaut from my painting slipped off the canvas and is tied to the system by an embroidery thread. The planets are made of my canvases, and each one takes you to a part of the site. Drag to spin.",
   "arraste ↔": "drag ↔",
   "5 projetos autorais e alguns testes pequenos": "5 projects of my own and a few small experiments",
   "Coisas que eu construí": "Things I've built",

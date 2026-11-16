@@ -444,7 +444,7 @@ html.motion .status .dot { animation: pulse 2.4s ease-in-out infinite; }
     <div class="head">
       <p class="label">Mapa do site</p>
       <h2 class="paint" id="mapa-t">Escolha um planeta</h2>
-      <p>Cada planeta leva a uma parte do site. Arraste para girar o sistema.</p>
+      <p>O astronauta do meu quadro saiu da tela e ficou preso ao sistema por uma linha de bordado. Os planetas são feitos das minhas telas, e cada um leva a uma parte do site. Arraste para girar.</p>
     </div>
     <div class="system">
       <canvas id="system" aria-hidden="true"></canvas>
@@ -1055,19 +1055,19 @@ html.motion .status .dot { animation: pulse 2.4s ease-in-out infinite; }
     const lis = labels.map((a) => a.parentElement);
     // órbita (unidades), tamanho, fase inicial
     const P = [
-      { o: 1.0,  r: .22, a: .6,  kind: 'ring' },
-      { o: 1.48, r: .15, a: 2.4, kind: 'stitch' },
-      { o: 1.98, r: .19, a: 4.1, kind: 'waves' },
-      { o: 2.46, r: .14, a: 5.5, kind: 'craters' },
-      { o: 2.92, r: .11, a: 1.3, kind: 'moon' },
+      { o: 1.0,  r: .25, a: .6,  kind: 'ring', img: 'img/futuro.jpg', fx: .5, fy: .86, zoom: 1.7 },
+      { o: 1.48, r: .2,  a: 2.4, kind: 'art',  img: 'img/folha-1.jpg', fx: .5, fy: .5, zoom: 1 },
+      { o: 1.98, r: .22, a: 4.1, kind: 'art',  img: 'img/folha-2.jpg', fx: .55, fy: .5, zoom: 1 },
+      { o: 2.46, r: .19, a: 5.5, kind: 'art',  img: 'img/astronauta.jpg', fx: .6, fy: .3, zoom: 1.9 },
+      { o: 2.92, r: .13, a: 1.3, kind: 'moon' },
     ];
     let C = {};
     const readColors = () => { C = { bg: css('canvas-2'), cream: css('canvas'), a: css('swirl-a'), b: css('swirl-b'), sage: css('sage'), moss: css('moss'), ink: css('ink'), muted: css('muted') }; };
     readColors();
     const look = [
-      [C.moss, C.sage], [C.sage, C.a], [C.b, C.cream], [C.ink, C.muted], [C.moss, C.b],
+      [C.moss, C.sage], [C.sage, C.a], [C.b, C.cream], [C.ink, C.muted], [C.a, C.cream],
     ];
-    const setLook = () => { look[0] = [C.moss, C.sage]; look[1] = [C.sage, C.a]; look[2] = [C.b, C.cream]; look[3] = [C.ink, C.muted]; look[4] = [C.moss, C.b]; };
+    const setLook = () => { look[0] = [C.moss, C.sage]; look[1] = [C.sage, C.a]; look[2] = [C.b, C.cream]; look[3] = [C.ink, C.muted]; look[4] = [C.a, C.cream]; };
 
     // estrelinhas fixas (semente fixa para não mudar a cada quadro)
     let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
@@ -1075,6 +1075,68 @@ html.motion .status .dot { animation: pulse 2.4s ease-in-out infinite; }
 
     let W = 0, H = 0, dpr = 1, yaw = -.35, pitch = .46, vel = 0, t = 0, hot = -1, last = 0, running = false, visible = false;
     let shot = [];
+    let axs = null, ays = null;
+    P.forEach((p) => { if (!p.img) return; const im = new Image(); im.onload = () => { p.tex = im; if (!running) draw(); }; im.src = p.img; });
+
+    // superfície pintada/bordada: recorte da foto da obra, balançando devagar como se o planeta girasse
+    function artBall(x, y, R, sx, sy, p, k) {
+      const im = p.tex, iw = im.naturalWidth, ih = im.naturalHeight;
+      const side = Math.min(iw, ih) / p.zoom;
+      const sway = motion ? Math.sin(t * .18 + k * 2) * side * .08 : 0;
+      const cx = Math.min(iw - side, Math.max(0, p.fx * iw - side / 2 + sway));
+      const cy = Math.min(ih - side, Math.max(0, p.fy * ih - side / 2));
+      ctx.save();
+      ctx.beginPath(); ctx.arc(x, y, R, 0, Math.PI * 2); ctx.clip();
+      ctx.drawImage(im, cx, cy, side, side, x - R, y - R, R * 2, R * 2);
+      let dx = sx - x, dy = sy - y; const d = Math.hypot(dx, dy) || 1; dx /= d; dy /= d;
+      ctx.fillStyle = 'rgba(23, 25, 20, .3)';
+      ctx.beginPath(); ctx.arc(x, y, R, 0, Math.PI * 2); ctx.arc(x + dx * R * .5, y + dy * R * .5, R * 1.02, 0, Math.PI * 2); ctx.fill('evenodd');
+    }
+
+    // o astronauta do quadro, no mesmo traço: contorno preto grosso e corpo cru
+    function astronaut(ax, ay, s, rot, lw) {
+      ctx.save(); ctx.translate(ax, ay); ctx.rotate(rot);
+      ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+      const box = (x, y, w, h, r) => { ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x * s, y * s, w * s, h * s, r * s); else ctx.rect(x * s, y * s, w * s, h * s); };
+      const tube = (x0, y0, x1, y1, w) => {
+        ctx.beginPath(); ctx.moveTo(x0 * s, y0 * s); ctx.lineTo(x1 * s, y1 * s);
+        ctx.strokeStyle = C.ink; ctx.lineWidth = w * s + lw * 2; ctx.stroke();
+        ctx.strokeStyle = C.cream; ctx.lineWidth = w * s; ctx.stroke();
+      };
+      ctx.strokeStyle = C.ink; ctx.lineWidth = lw;
+      ctx.fillStyle = C.a; box(-.56, -.12, 1.12, .82, .16); ctx.fill(); ctx.stroke();
+      tube(-.2, .6, -.32, 1.04, .3); tube(.2, .6, .36, 1, .3);
+      tube(-.38, .06, -.74, .36, .26); tube(.38, .06, .76, -.24, .26);
+      ctx.strokeStyle = C.ink; ctx.lineWidth = lw;
+      ctx.fillStyle = C.cream; box(-.42, -.1, .84, .8, .18); ctx.fill(); ctx.stroke();
+      ctx.lineWidth = lw * .75; box(-.15, .2, .3, .2, .04); ctx.stroke();
+      ctx.lineWidth = lw * 1.1;
+      ctx.beginPath(); ctx.arc(0, -.52 * s, .5 * s, 0, Math.PI * 2); ctx.fillStyle = C.cream; ctx.fill(); ctx.stroke();
+      ctx.lineWidth = lw;
+      ctx.beginPath(); ctx.ellipse(.04 * s, -.52 * s, .34 * s, .27 * s, 0, 0, Math.PI * 2); ctx.fillStyle = C.a; ctx.fill(); ctx.stroke();
+      // as letras do visor, em rabisco
+      ctx.lineWidth = Math.max(1, lw * .55);
+      for (const [yy, w] of [[-.62, .34], [-.52, .4], [-.42, .3]]) { ctx.beginPath(); ctx.moveTo((.04 - w / 2) * s, yy * s); ctx.lineTo((.04 + w / 2) * s, yy * s); ctx.setLineDash([lw * .9, lw * .7]); ctx.stroke(); }
+      ctx.setLineDash([]);
+      ctx.restore();
+      const c = Math.cos(rot), sn = Math.sin(rot);
+      return [ax - .56 * s * c - .3 * s * sn, ay - .56 * s * sn + .3 * s * c]; // ponto da mochila onde a linha prende
+    }
+
+    // linha de bordado: pontos com brilho, igual à tela de bordar lá embaixo
+    function thread(x0, y0, x1, y1) {
+      const dx = x1 - x0, dy = y1 - y0, dist = Math.hypot(dx, dy) || 1;
+      const bend = dist * .16 + (motion ? Math.sin(t * .9) * 8 * dpr : 0);
+      const mx = (x0 + x1) / 2 - dy / dist * bend, my = (y0 + y1) / 2 + dx / dist * bend;
+      const step = 11 * dpr;
+      ctx.lineCap = 'round';
+      ctx.setLineDash([step * .7, step * .3]);
+      ctx.strokeStyle = C.moss; ctx.lineWidth = 4.2 * dpr;
+      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.quadraticCurveTo(mx, my, x1, y1); ctx.stroke();
+      ctx.strokeStyle = 'rgba(255, 255, 255, .5)'; ctx.lineWidth = 1.3 * dpr;
+      ctx.beginPath(); ctx.moveTo(x0, y0 - dpr); ctx.quadraticCurveTo(mx, my - dpr, x1, y1 - dpr); ctx.stroke();
+      ctx.setLineDash([]);
+    }
 
     function resize() {
       const r = cv.getBoundingClientRect();
@@ -1184,15 +1246,13 @@ html.motion .status .dot { animation: pulse 2.4s ease-in-out infinite; }
           if (!moonFront) { ball(mx, my, R * .38, sun[0], sun[1], [C.sage, C.cream]); outline(mx, my, R * .38, lw * .8); }
           b.moon = [mx, my];
         }
-        ball(x, y, R, sun[0], sun[1], look[k]);
+        if (p.tex) artBall(x, y, R, sun[0], sun[1], p, k); else ball(x, y, R, sun[0], sun[1], look[k]);
         ctx.lineCap = 'round';
-        if (p.kind === 'stitch') {
-          ctx.strokeStyle = C.ink; ctx.lineWidth = 2 * dpr; ctx.setLineDash([5 * dpr, 4 * dpr]);
-          for (const o of [-.35, .3]) { ctx.beginPath(); ctx.moveTo(x - R, y + o * R); ctx.bezierCurveTo(x - R * .3, y + (o - .35) * R, x + R * .3, y + (o + .35) * R, x + R, y + o * R); ctx.stroke(); }
-          ctx.setLineDash([]);
-        } else if (p.kind === 'waves') {
-          ctx.strokeStyle = C.sage; ctx.lineWidth = R * .22;
-          for (const o of [-.45, .1, .62]) { ctx.beginPath(); for (let i = 0; i <= 20; i++) { const u = -1 + i / 10; const yy = y + o * R + Math.sin(u * 4 + o * 5) * R * .12; i ? ctx.lineTo(x + u * R, yy) : ctx.moveTo(x + u * R, yy); } ctx.stroke(); }
+        if (p.kind === 'moon') {
+          ctx.strokeStyle = C.ink; ctx.lineWidth = 1.4 * dpr; ctx.globalAlpha = .8;
+          ctx.setLineDash([1.5 * dpr, 2.5 * dpr]); ctx.beginPath(); ctx.arc(x, y, R * .78, 0, 7); ctx.stroke(); ctx.setLineDash([]);
+          for (const o of [-.28, 0, .28]) { ctx.beginPath(); for (let i = 0; i <= 12; i++) { const u = -.62 + i / 12 * 1.24; const yy = y + o * R + Math.sin(u * 9) * R * .06; i ? ctx.lineTo(x + u * R, yy) : ctx.moveTo(x + u * R, yy); } ctx.stroke(); }
+          ctx.globalAlpha = 1;
         } else if (p.kind === 'craters') {
           ctx.strokeStyle = C.cream; ctx.lineWidth = 1.6 * dpr; ctx.globalAlpha = .75;
           for (const [cx, cy, cr] of [[-.35, -.25, .2], [.3, .25, .26], [.1, -.5, .12]]) { ctx.beginPath(); ctx.arc(x + cx * R, y + cy * R, cr * R, 0, 7); ctx.stroke(); }
@@ -1223,11 +1283,25 @@ html.motion .status .dot { animation: pulse 2.4s ease-in-out infinite; }
         ctx.fillText('A', sun[0], sun[1] + R * .06);
       }
 
+      // o astronauta vai até o planeta em foco; sem foco, flutua no canto
+      const s = (narrow ? 27 : 42) * dpr;
+      const sunR = .4 * scale * sun[3] * grow;
+      let hx = W * (narrow ? .8 : .82), hy = H * (narrow ? .18 : .25);
+      if (hot >= 0) { const b = bodies[hot]; let ox = b.x - sun[0], oy = b.y - sun[1]; const od = Math.hypot(ox, oy) || 1; ox /= od; oy /= od; const reach = b.R * (b.p.kind === 'ring' ? 1.9 : 1) + s * 1.35; hx = b.x + ox * reach; hy = b.y + oy * reach - s * .35; }
+      hx = Math.min(W - s * 1.3, Math.max(s * 1.3, hx)); hy = Math.min(H - s * 1.5, Math.max(s * 1.6, hy));
+      if (axs === null || !running) { axs = hx; ays = hy; } else { axs += (hx - axs) * .055; ays += (hy - ays) * .055; }
+      const ax = axs + (motion ? Math.sin(t * .55) * 7 * dpr : 0), ay = ays + (motion ? Math.cos(t * .43) * 6 * dpr : 0);
+      const rot = (motion ? Math.sin(t * .35) * .18 : 0) + Math.max(-.35, Math.min(.35, (hx - axs) / (W * .5)));
+      const anchor = [ax - .56 * s * Math.cos(rot) - .3 * s * Math.sin(rot), ay - .56 * s * Math.sin(rot) + .3 * s * Math.cos(rot)];
+      const ux = anchor[0] - sun[0], uy = anchor[1] - sun[1], ud = Math.hypot(ux, uy) || 1;
+
       orbits(false);
       bodies.filter((b) => b.z > 0).sort((a, b) => b.z - a.z).forEach(planet);
       drawSun();
+      thread(sun[0] + ux / ud * sunR, sun[1] + uy / ud * sunR, anchor[0], anchor[1]);
       orbits(true);
       bodies.filter((b) => b.z <= 0).sort((a, b) => b.z - a.z).forEach(planet);
+      astronaut(ax, ay, s, rot, lw);
 
       draw.bodies = bodies;
       bodies.forEach((b) => {
